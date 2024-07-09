@@ -57,8 +57,8 @@ const CONFIG = {
     imageURL: '',
   },
   social: {
-    linkedin: 'ariful-alam',
-    twitter: 'arif_szn',
+    linkedin: 'kyle-anderson-mke',
+    //twitter: 'arif_szn',
     mastodon: 'arifszn@mastodon.social',
     researchGate: '',
     facebook: '',
@@ -74,7 +74,7 @@ const CONFIG = {
     stackoverflow: '', // example: '1/jeff-atwood'
     skype: '',
     telegram: '',
-    website: 'https://www.arifszn.com',
+    website: 'https://kyleanderson.dev',
     phone: '',
     email: 'arifulalamszn@gmail.com',
   },
