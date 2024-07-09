@@ -52,7 +52,7 @@ const CONFIG = {
     },
   },
   seo: {
-    title: 'Portfolio of Ariful Alam',
+    title: 'Kyle Anderson\'s Portfolio',
     description: '',
     imageURL: '',
   },
