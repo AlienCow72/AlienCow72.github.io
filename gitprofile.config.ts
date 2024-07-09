@@ -164,7 +164,7 @@ const CONFIG = {
     snippetVersion: 6,
   },
   themeConfig: {
-    defaultTheme: 'lofi',
+    defaultTheme: 'luxury',
 
     // Hides the switch in the navbar
     // Useful if you want to support a single color mode
@@ -179,9 +179,17 @@ const CONFIG = {
 
     // Available themes. To remove any theme, exclude from here.
     themes: [
+      'luxury',
       'light',
       'dark',
-      'gruvbox',
+      'black',
+      'coffee',
+      'winter',
+      'dim',
+
+    ],
+    // Other themes available
+    unused_themes:[
       'cupcake',
       'bumblebee',
       'emerald',
@@ -198,8 +206,6 @@ const CONFIG = {
       'pastel',
       'fantasy',
       'wireframe',
-      'black',
-      'luxury',
       'dracula',
       'cmyk',
       'autumn',
@@ -207,13 +213,10 @@ const CONFIG = {
       'acid',
       'lemonade',
       'night',
-      'coffee',
-      'winter',
-      'dim',
       'nord',
       'sunset',
       'procyon',
-    ],
+      ]
 
     // Custom theme, applied to `procyon` theme
     customTheme: {
