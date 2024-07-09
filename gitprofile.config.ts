@@ -216,7 +216,7 @@ const CONFIG = {
       'nord',
       'sunset',
       'procyon',
-      ]
+    ],
 
     // Custom theme, applied to `procyon` theme
     customTheme: {
