@@ -83,31 +83,24 @@ const CONFIG = {
       'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', // Empty fileUrl will hide the `Download Resume` button.
   },
   skills: [
+    'Python',
+    'Jira/Confluence',
     'PHP',
-    'Laravel',
-    'JavaScript',
-    'React.js',
-    'Node.js',
-    'Nest.js',
-    'MySQL',
     'PostgreSQL',
     'Git',
     'Docker',
-    'PHPUnit',
-    'CSS',
-    'Antd',
-    'Tailwind',
+    
   ],
   experiences: [
     {
-      company: 'Company Name',
+      company: 'DSTax LLC',
       position: 'Position',
       from: 'September 2021',
       to: 'Present',
       companyLink: 'https://example.com',
     },
     {
-      company: 'Company Name',
+      company: 'Collectivo Coffee Roasters',
       position: 'Position',
       from: 'July 2019',
       to: 'August 2021',
