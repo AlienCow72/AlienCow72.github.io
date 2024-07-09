@@ -1,6 +1,7 @@
 export const DEFAULT_THEMES = [
   'light',
   'dark',
+  'gruvbox'
   'cupcake',
   'bumblebee',
   'emerald',
