@@ -181,6 +181,7 @@ const CONFIG = {
     themes: [
       'light',
       'dark',
+      'gruvbox'
       'cupcake',
       'bumblebee',
       'emerald',
