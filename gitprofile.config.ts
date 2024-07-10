@@ -58,6 +58,7 @@ const CONFIG = {
   },
   social: {
     linkedin: 'kyle-anderson-mke',
+    gitlab:'KMA_DSTax',
     //twitter: 'arif_szn',
     mastodon: '',
     researchGate: '',
