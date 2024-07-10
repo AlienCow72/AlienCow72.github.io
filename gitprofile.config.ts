@@ -122,6 +122,13 @@ const CONFIG = {
       to: 'May 2020',
       companyLink: 'https://colectivo.com',
     },
+    {
+      company: 'Komatsu (Hired when the company was Joy Global)',
+      position: 'Facilities Management Intern',
+      from: 'May 2016',
+      to: 'Dec 2018',
+      companyLink: 'https://www.komatsu.com',
+    },
   ],
   certifications: [
     // {
