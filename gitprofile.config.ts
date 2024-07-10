@@ -147,7 +147,7 @@ const CONFIG = {
     },
     {
       institution: 'Milwaukee School of Engineering',
-      degree: 'Transfered',
+      degree: 'Studied Industrial Engineering and Supply Chain Management - Transfered',
       from: '2014',
       to: '2016',
     },
