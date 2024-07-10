@@ -85,27 +85,42 @@ const CONFIG = {
   },
   skills: [
     'Python',
+    'Django',
+    'Flask',
     'Jira/Confluence',
+    'Office 365 Enterprise',
+    'Sharepoint',
+    'C#',
     'PHP',
     'PostgreSQL',
     'Git',
+    'REST APIs',
     'Docker',
-    
+    'Linux',
+    'MacOS',
+    'Windows',
   ],
   experiences: [
     {
       company: 'DSTax LLC',
-      position: 'Position',
-      from: 'September 2021',
-      to: 'Present',
-      companyLink: 'https://example.com',
+      position: 'Project Manager/Lead Developer',
+      from: 'May 2022',
+      to: 'May 2024',
+      companyLink: 'https://dstax.com',
+    },
+    {
+      company: 'DSTax LLC',
+      position: 'Contract Developer',
+      from: 'May 2020',
+      to: 'May 2022',
+      companyLink: 'https://dstax.com',
     },
     {
       company: 'Collectivo Coffee Roasters',
-      position: 'Position',
-      from: 'July 2019',
-      to: 'August 2021',
-      companyLink: 'https://example.com',
+      position: 'Warehouse Associate',
+      from: 'June 2019',
+      to: 'May 2020',
+      companyLink: 'https://colectivo.com',
     },
   ],
   certifications: [
@@ -118,16 +133,16 @@ const CONFIG = {
   ],
   educations: [
     {
-      institution: 'Institution Name',
-      degree: 'Degree',
-      from: '2015',
-      to: '2019',
+      institution: 'University of Wisconsin - Milwaukee',
+      degree: 'BBA IT Management',
+      from: '2017',
+      to: '2020',
     },
     {
-      institution: 'Institution Name',
-      degree: 'Degree',
-      from: '2012',
-      to: '2014',
+      institution: 'Milwaukee School of Engineering',
+      degree: 'Transfered',
+      from: '2014',
+      to: '2016',
     },
   ],
   publications: [
@@ -232,11 +247,11 @@ const CONFIG = {
   },
 
   // Optional Footer. Supports plain text or HTML.
-  footer: `Made with <a 
-      class="text-primary" href="https://github.com/arifszn/gitprofile"
-      target="_blank"
-      rel="noreferrer"
-    >GitProfile</a> and ❤️`,
+  // footer: `Made with <a 
+  //     class="text-primary" href="https://github.com/arifszn/gitprofile"
+  //     target="_blank"
+  //     rel="noreferrer"
+  //   >GitProfile</a> and ❤️`,
 
   enablePWA: true,
 };
