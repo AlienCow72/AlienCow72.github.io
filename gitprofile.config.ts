@@ -33,7 +33,7 @@ const CONFIG = {
       // To hide the `External Projects` section, keep it empty.
       projects: [
         {
-          title: 'ITBridge to DSTaxConnect',
+          title: 'DSTax - ITBridge to DSTaxConnect',
           description:
             'I was initially hired by DSTax as a Freelance/Contract Developer working on their ITBridge product. This product connects ERP/ECommerce applications to the Thompson Reuters Onesource Tax Engine for the purpose of calculating Sales and VAT tax. For two years, I built integrations/plugins for Adobe Commerce, Stripe, Sage Intacct, Acuamtica, Chargebee, Braintree, Magento, and others. I was then hired as the Product Manager in 2022. During that time we were getting approached by other Tax Providers wondering if we could build integrations for their platforms. I order to support this I proposed that we should build a new version from the ground up. This was the approach we ended up going with because we were already going to need to refactor the ITBridge code so instead we took the opportunity to rebuild and improve the app. By doing this were able to improve the UI/UX of the web application, as well as build a system that was designed to accomadate our growing platform. In addition, under my leadership we implemented automated testing and deployment CI/CD piplines. I formalized our issue and bug tracking and centralized our documentation using Jira and Confluence,  ',
           imageUrl:
@@ -41,9 +41,9 @@ const CONFIG = {
           link: 'https://dstax.com/itbridge/',
         },
         {
-          title: 'Project Name',
+          title: 'Joy Global - Assest Investigation',
           description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut.',
+            'During my time interning with Komatsu, my primary project was to analyze and update their assest list in anticipation of their upcoming merger with Komatsu. For this, I went through their manufactuing site and matched the physical machine to the asset entry and compiled the machines specifications. During this project, I discovered over 10 million dollars in unaccounted assests. At the beginning of this project the assests were tracked using a single excel file, as part of my work I converted the excel file into a database stored in Sharepoint and tied the related documetation to the assets.',
           imageUrl:
             'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg',
           link: 'https://example.com',
