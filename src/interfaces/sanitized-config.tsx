@@ -44,7 +44,7 @@ export interface SanitizedSEO {
 
 export interface SanitizedSocial {
   linkedin?: string;
-  twitter?: string;
+  x?: string;
   mastodon?: string;
   researchGate?: string;
   facebook?: string;
@@ -59,10 +59,10 @@ export interface SanitizedSocial {
   dev?: string;
   stackoverflow?: string;
   website?: string;
-  skype?: string;
   telegram?: string;
   phone?: string;
   email?: string;
+  discord?: string;
 }
 
 export interface SanitizedResume {
@@ -116,23 +116,12 @@ export interface SanitizedBlog {
   limit: number;
 }
 
-export interface SanitizedCustomTheme {
-  primary: string;
-  secondary: string;
-  accent: string;
-  neutral: string;
-  'base-100': string;
-  '--rounded-box': string;
-  '--rounded-btn': string;
-}
-
 export interface SanitizedThemeConfig {
   defaultTheme: string;
   disableSwitch: boolean;
   respectPrefersColorScheme: boolean;
   displayAvatarRing: boolean;
   themes: Array<string>;
-  customTheme: SanitizedCustomTheme;
 }
 
 export interface SanitizedConfig {

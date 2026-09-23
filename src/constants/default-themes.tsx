@@ -32,5 +32,8 @@ export const DEFAULT_THEMES = [
   'dim',
   'nord',
   'sunset',
+  'caramellatte',
+  'abyss',
+  'silk',
   'procyon',
 ];
