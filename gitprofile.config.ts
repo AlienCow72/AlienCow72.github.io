@@ -75,7 +75,7 @@ const CONFIG = {
     stackoverflow: '', // example: '1/jeff-atwood'
     skype: '',
     telegram: '',
-    website: 'https://kyleanderson.dev',
+    website: 'https://kyleanderson.online',
     phone: '',
     email: 'andersonktech@icloud.com',
   },
@@ -105,7 +105,7 @@ const CONFIG = {
       company: 'DSTax LLC',
       position: 'Project Manager/Lead Developer',
       from: 'May 2022',
-      to: 'May 2024',
+      to: 'Sept 2026',
       companyLink: 'https://dstax.com',
     },
     {
