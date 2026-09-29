@@ -6,6 +6,7 @@ import '../styles/global.css';
 import { site } from '../data/site';
 import Icon from '../components/Icon.astro';
 import HeaderParticleMark from '../components/HeaderParticleMark.astro';
+import footerMark from '../assets/brand/personal-mark-yellow.svg';
 interface Props {
   title?: string;
   description?: string;
@@ -109,7 +110,7 @@ const path = Astro.url.pathname;
       <a class="brand footer-brand" href="/" aria-label="Kyle Anderson home">
         <img
           class="footer-mark"
-          src="/src/assets/brand/personal-mark-yellow.svg"
+          src={footerMark.src}
           width="32"
           height="32"
           alt=""
