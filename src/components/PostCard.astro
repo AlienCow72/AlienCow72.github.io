@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const icons = { Coding: 'code', Music: 'music', AI: 'spark' };
+---
+
+<a
+  class="post-card"
+  href={`/blog/${post.id}/`}
+  data-category={post.data.category}
+  data-search={`${post.data.title} ${post.data.description} ${post.data.category}`.toLowerCase()}
+>
+  <div class="post-top">
+    <span class:list={['post-category', post.data.category.toLowerCase()]}>
+      <Icon name={icons[post.data.category]} size={15} />
+      {post.data.category}
+    </span>
+    <span>{post.data.readTime} read</span>
+  </div>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  <div class="post-bottom">
+    <span>
+      {post.data.sample
+        ? 'Sample article'
+        : post.data.date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'UTC',
+          })}
+    </span>
+    <Icon name="arrow" size={19} />
+  </div>
+</a>

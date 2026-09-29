@@ -1,0 +1,35 @@
+---
+import Mark from '../assets/brand/personal-mark.svg';
+
+interface Props {
+  class?: string;
+  size?: number;
+  color?: string;
+  variant?: 'solid' | 'outline';
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+
+const {
+  class: className,
+  size = 44,
+  color = 'currentColor',
+  variant = 'solid',
+  fill = variant === 'outline' ? 'none' : 'currentColor',
+  stroke = variant === 'outline' ? 'currentColor' : 'none',
+  strokeWidth = 1.5,
+} = Astro.props;
+---
+
+<Mark
+  class={className}
+  width={size}
+  height={size}
+  color={color}
+  fill={fill}
+  stroke={stroke}
+  stroke-width={strokeWidth}
+  aria-hidden="true"
+  focusable="false"
+/>
