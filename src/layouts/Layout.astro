@@ -32,7 +32,7 @@ const path = Astro.url.pathname;
     <meta name="description" content={description} />
     <title>{pageTitle}</title>
     <link rel="canonical" href={new URL(path, Astro.site)} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -81,10 +81,14 @@ const path = Astro.url.pathname;
       <slot />
     </main>
     <footer class="site-footer wrap">
-      <a class="brand footer-brand" href="/">
-        <span class="monogram">
-          k<span>.</span>
-        </span>
+      <a class="brand footer-brand" href="/" aria-label="Kyle Anderson home">
+        <img
+          class="footer-mark"
+          src="/src/assets/brand/personal-mark-yellow.svg"
+          width="32"
+          height="32"
+          alt=""
+        />
         <span>Always a work in progress.</span>
       </a>
       <div class="footer-links">

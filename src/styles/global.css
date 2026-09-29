@@ -127,19 +127,6 @@ svg {
 .brand-period {
   color: var(--gold);
 }
-.monogram {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 45px;
-  line-height: 1;
-  color: var(--gold);
-  letter-spacing: -7px;
-  padding-right: 6px;
-}
-.monogram span {
-  font-size: 34px;
-}
 .site-header nav {
   display: flex;
   gap: 34px;
@@ -787,11 +774,9 @@ h1 {
   font-weight: 400;
   color: var(--muted);
 }
-.footer-brand .monogram {
-  font-size: 32px;
-}
-.footer-brand .monogram span {
-  font-size: 24px;
+.footer-mark {
+  display: block;
+  flex-shrink: 0;
 }
 .footer-links {
   display: flex;
