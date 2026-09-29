@@ -1,4 +1,7 @@
 ---
+import DstaxMark from './DstaxMark.astro';
+import personalMark from '../assets/brand/personal-mark-yellow.svg';
+
 interface Props {
   type: string;
 }
@@ -13,7 +16,7 @@ const { type } = Astro.props;
         <span class="diagram-node">ERP</span>
         <span class="diagram-line"></span>
         <span class="diagram-core">
-          D<span>↗</span>
+          <DstaxMark />
         </span>
         <span class="diagram-line"></span>
         <span class="diagram-node">TAX</span>
@@ -35,7 +38,14 @@ const { type } = Astro.props;
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
       <div class="web-diagram">
         <span class="tiny-nav">
-          k. <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
+          <img
+            class="tiny-brand-mark"
+            src={personalMark.src}
+            width="22"
+            height="22"
+            alt=""
+          />
+          <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
         </span>
         <span class="tiny-title">
           Stay

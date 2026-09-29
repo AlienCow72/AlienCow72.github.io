@@ -449,6 +449,7 @@ h1 {
   border-color: #e4bc7855;
 }
 .project-art {
+  --art-mono: monospace;
   height: 220px;
   background: #303234;
   position: relative;
@@ -462,7 +463,7 @@ h1 {
 }
 .diagram-label,
 .diagram-foot {
-  font: 7px monospace;
+  font: 7px var(--art-mono);
   letter-spacing: 1.7px;
   position: relative;
   z-index: 1;
@@ -488,7 +489,7 @@ h1 {
   border: 1px solid #e4bc7850;
   background: #363635;
   padding: 13px 10px;
-  font: 9px monospace;
+  font: 9px var(--art-mono);
   border-radius: 5px;
 }
 .diagram-line {
@@ -498,24 +499,37 @@ h1 {
   opacity: 0.5;
 }
 .diagram-core {
+  --mark-width: 75px;
   position: relative;
   display: grid;
   place-items: center;
-  width: 75px;
-  height: 75px;
-  border: 1px solid var(--gold);
-  border-radius: 14px;
-  background: #e4bc7810;
-  font: italic 43px var(--serif);
-  box-shadow:
-    0 0 0 8px #e4bc7806,
-    0 0 0 17px #e4bc7803;
+  width: var(--mark-width);
+  flex-shrink: 0;
 }
-.diagram-core span {
-  position: absolute;
-  font: 14px var(--sans);
-  right: 10px;
-  top: 9px;
+.dstax-mark {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 1.25em 2.25em;
+  gap: 0.12em;
+  width: 100%;
+  font: 400 calc(var(--mark-width) / 3) / 1 var(--art-mono);
+  letter-spacing: 0;
+  color: var(--bg);
+}
+.dstax-tile {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  border: 0.04em solid var(--gold);
+  border-radius: 0.16em;
+  background: linear-gradient(135deg, #f1d592, var(--gold) 35%, #8a693b);
+}
+.dstax-tile-outline {
+  background: transparent;
+  color: var(--gold);
+}
+.dstax-tile-stack {
+  grid-template-rows: repeat(2, 1fr);
 }
 .art-data {
   background: radial-gradient(ellipse at 30% 80%, #3b4742, #2c3331);
@@ -557,16 +571,21 @@ h1 {
   padding: 13px 18px;
 }
 .tiny-nav {
-  font: italic 18px var(--serif);
   display: flex;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ffffff12;
   padding-bottom: 6px;
 }
+.tiny-brand-mark {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
 .tiny-nav > span {
   font: 5px var(--sans);
   letter-spacing: 1px;
-  padding-top: 5px;
 }
 .tiny-title {
   font: 30px/0.9 var(--serif);
@@ -1196,9 +1215,7 @@ h1 {
     padding: 9px 5px;
   }
   .diagram-core {
-    width: 50px;
-    height: 50px;
-    font-size: 30px;
+    --mark-width: 50px;
   }
   .diagram-line {
     width: 15px;
@@ -1432,9 +1449,7 @@ h1 {
     letter-spacing: 1px;
   }
   .diagram-core {
-    width: 80px;
-    height: 80px;
-    font-size: 45px;
+    --mark-width: 80px;
   }
   .diagram-node {
     font-size: 9px;
