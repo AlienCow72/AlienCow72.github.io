@@ -22,12 +22,14 @@ if (canvas && context) {
       y: (y - top - height / 2) / scale,
       z,
     });
+  // Wider sampling and two depth layers keep individual dots distinct and
+  // reduce projection, sorting, and canvas draw calls during pointer motion.
   const sample = document.createElement('canvas').getContext('2d')!;
   for (const path of svg.querySelectorAll('path')) {
     const data = path.getAttribute('d')!;
     const silhouette = new Path2D(data);
-    for (let y = top; y <= top + height; y += 6) {
-      for (let x = left; x <= left + width; x += 6) {
+    for (let y = top; y <= top + height; y += 10) {
+      for (let x = left; x <= left + width; x += 10) {
         if (sample.isPointInPath(silhouette, x, y, 'evenodd')) {
           add(x, y, -0.1);
           add(x, y, 0.1);
@@ -41,10 +43,10 @@ if (canvas && context) {
       );
       outline.setAttribute('d', `${contour} Z`);
       const length = outline.getTotalLength();
-      const count = Math.ceil(length / 5);
+      const count = Math.ceil(length / 9);
       for (let i = 0; i < count; i++) {
         const point = outline.getPointAtLength((i / count) * length);
-        for (const depth of [-0.1, 0, 0.1]) add(point.x, point.y, depth);
+        for (const depth of [-0.1, 0.1]) add(point.x, point.y, depth);
       }
     }
   }

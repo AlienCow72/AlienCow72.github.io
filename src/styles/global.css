@@ -119,8 +119,8 @@ svg {
 }
 .home-mark {
   display: block;
-  width: 44px;
-  height: 44px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
   color: var(--text);
 }
@@ -1292,8 +1292,8 @@ h1 {
     justify-content: center;
   }
   .site-header .home-mark {
-    width: 34px;
-    height: 34px;
+    width: 48px;
+    height: 48px;
   }
   .site-header nav {
     gap: 32px;
