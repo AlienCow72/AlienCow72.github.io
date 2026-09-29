@@ -1,3 +1,10 @@
+import {
+  createSignalShapes,
+  spinRecord,
+  type Particle,
+  type Sculpture,
+} from './signal-shapes';
+
 const canvas = document.querySelector<HTMLCanvasElement>('#signal-canvas');
 const ctx = canvas?.getContext('2d');
 if (canvas && ctx) {
@@ -17,78 +24,71 @@ if (canvas && ctx) {
   let rotationX = 0;
   let rotationY = 0;
 
+  const shapes = createSignalShapes();
+
   function draw() {
     if (!canvas || !ctx) return;
     ctx.clearRect(0, 0, width, height);
     const radius = Math.min(width * 0.32, height * 0.39);
-    const angleY = time * 0.16 + rotationX + 0.4;
-    const angleX = 0.5 + rotationY;
-    const points: { x: number; y: number; z: number; band: number }[] = [];
-    const bands = 22;
-    const count = 66;
-    for (let band = 0; band < bands; band++) {
-      for (let i = 0; i < count; i++) {
-        const u = (i / count) * Math.PI * 2;
-        const v = (band / bands) * Math.PI * 2;
-        let x, y, z;
-        if (mode === 'music') {
-          const wave =
-            Math.sin(u * 5 + time * 1.4) * 0.14 + Math.cos(u * 3 - time) * 0.09;
-          const r = 0.8 + wave + Math.cos(v) * 0.25;
-          x = r * Math.cos(u);
-          y = r * Math.sin(u);
-          z = Math.sin(v) * 0.38;
-        } else if (mode === 'ai') {
-          const latitude = (band / (bands - 1)) * Math.PI;
-          const r = 1 + Math.sin(u * 4 + latitude * 3 + time) * 0.12;
-          x = r * Math.sin(latitude) * Math.cos(u);
-          y = r * Math.cos(latitude);
-          z = r * Math.sin(latitude) * Math.sin(u);
-        } else {
-          const r = 0.73 + Math.cos(v) * 0.32;
-          x = r * Math.cos(u);
-          y = r * Math.sin(u);
-          z = Math.sin(v) * 0.32;
-        }
-        const xx = x * Math.cos(angleY) + z * Math.sin(angleY);
-        const zz = -x * Math.sin(angleY) + z * Math.cos(angleY);
-        const yy = y * Math.cos(angleX) - zz * Math.sin(angleX);
-        const depth = y * Math.sin(angleX) + zz * Math.cos(angleX);
-        const perspective = 3.7 / (3.7 - depth);
-        points.push({
-          x: width / 2 + xx * radius * perspective,
-          y: height / 2 + yy * radius * perspective,
-          z: depth,
-          band,
+    // The deck rocks as one object; the record also spins in its local plane.
+    // Positive pitch keeps the top edge farther away, leaning the deck back.
+    const angleY =
+      mode === 'music'
+        ? 0.12 + Math.sin(time * 0.32) * 0.18 + rotationX * 0.35
+        : Math.sin(time * 0.32) * 0.32 + rotationX + 0.3;
+    const angleX =
+      mode === 'music'
+        ? 0.4 + Math.sin(time * 0.25) * 0.06 + rotationY * 0.2
+        : -0.12 + rotationY;
+    const color =
+      mode === 'music'
+        ? '192,183,211'
+        : mode === 'ai'
+          ? '57,255,20'
+          : '228,188,120';
+    const project = ({ x, y, z, glow = 1 }: Particle): Particle => {
+      const xx = x * Math.cos(angleY) + z * Math.sin(angleY);
+      const zz = -x * Math.sin(angleY) + z * Math.cos(angleY);
+      const yy = y * Math.cos(angleX) - zz * Math.sin(angleX);
+      const depth = y * Math.sin(angleX) + zz * Math.cos(angleX);
+      const perspective = 3.7 / (3.7 - depth);
+      return {
+        x: width / 2 + xx * radius * perspective,
+        y: height / 2 + yy * radius * perspective,
+        z: depth,
+        glow,
+      };
+    };
+    const points: Particle[] = [];
+    function render(shape: Sculpture, transform = (p: Particle) => p) {
+      if (!ctx) return;
+      points.push(...shape.points.map((p) => project(transform(p))));
+      for (const contour of shape.contours) {
+        ctx.beginPath();
+        contour.forEach((p, i) => {
+          const projected = project(transform(p));
+          if (i === 0) ctx.moveTo(projected.x, projected.y);
+          else ctx.lineTo(projected.x, projected.y);
         });
+        // Extruded symbols have closed contours; deck paths may be open.
+        if (mode !== 'music') ctx.closePath();
+        ctx.strokeStyle = `rgba(${color},${mode === 'music' ? 0.16 : 0.3})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
       }
     }
-    // Fine latitude traces keep the form legible even when motion is disabled.
-    for (let band = 0; band < bands; band += 2) {
-      ctx.beginPath();
-      for (let i = 0; i <= count; i++) {
-        const p = points[band * count + (i % count)];
-        if (i === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
-      }
-      ctx.strokeStyle =
-        mode === 'ai'
-          ? 'rgba(167,191,172,0.11)'
-          : mode === 'music'
-            ? 'rgba(192,183,211,0.13)'
-            : 'rgba(228,188,120,0.12)';
-      ctx.lineWidth = 0.6;
-      ctx.stroke();
+    if (mode === 'music') {
+      render(shapes.deck);
+      render(shapes.record, (p) => spinRecord(p, time));
+    } else {
+      render(mode === 'ai' ? shapes.ai : shapes.code);
     }
     points.sort((a, b) => a.z - b.z);
     for (const p of points) {
-      const alpha = 0.18 + ((p.z + 1.3) / 2.6) * 0.68;
-      const color =
-        mode === 'ai'
-          ? '167,191,172'
-          : mode === 'music'
-            ? '192,183,211'
-            : '228,188,120';
+      const alpha = Math.min(
+        1,
+        (0.18 + ((p.z + 1.3) / 2.6) * 0.68) * (p.glow ?? 1),
+      );
       ctx.fillStyle = `rgba(${color},${alpha})`;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.z > 0.6 ? 1.05 : 0.65, 0, Math.PI * 2);
@@ -148,6 +148,14 @@ if (canvas && ctx) {
       mode = button.dataset.mode || 'code';
       modes.forEach((item) =>
         item.setAttribute('aria-pressed', String(item === button)),
+      );
+      canvas.setAttribute(
+        'aria-label',
+        mode === 'code'
+          ? 'A three-dimensional particle sculpture of a code symbol.'
+          : mode === 'music'
+            ? 'A three-dimensional particle turntable with a gently rocking deck and independently spinning record.'
+            : 'A three-dimensional particle sculpture of Kyle Anderson’s brandmark.',
       );
       draw();
     }),

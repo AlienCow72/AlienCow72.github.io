@@ -5,7 +5,7 @@ import '@fontsource-variable/newsreader/wght-italic.css';
 import '../styles/global.css';
 import { site } from '../data/site';
 import Icon from '../components/Icon.astro';
-import BrandMark from '../components/BrandMark.astro';
+import HeaderParticleMark from '../components/HeaderParticleMark.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -65,7 +65,7 @@ const path = Astro.url.pathname;
     </a>
     <header class="site-header wrap">
       <a class="brand" href="/" aria-label="Kyle Anderson home">
-        <BrandMark class="home-mark" />
+        <HeaderParticleMark />
         <span>
           Kyle Anderson<span class="brand-period">.</span>
         </span>

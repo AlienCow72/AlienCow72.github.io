@@ -1,0 +1,34 @@
+---
+import BrandMark from './BrandMark.astro';
+---
+
+<span class="home-mark header-particle-mark" aria-hidden="true">
+  <BrandMark class="particle-mark-fallback" />
+  <canvas class="header-particle-canvas"></canvas>
+</span>
+
+<style>
+  .header-particle-mark {
+    position: relative;
+  }
+  .header-particle-mark :global(.particle-mark-fallback),
+  .header-particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .header-particle-canvas {
+    display: none;
+  }
+  .header-particle-mark[data-ready] .header-particle-canvas {
+    display: block;
+  }
+  .header-particle-mark[data-ready] :global(.particle-mark-fallback) {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  import '../scripts/header-particle-mark';
+</script>
