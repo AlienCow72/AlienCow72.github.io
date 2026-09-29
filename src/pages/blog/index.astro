@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout
+  title="Writing"
+  description="Notes and explorations on coding, music, artificial intelligence, and the places they overlap."
+>
+  <div class="wrap page-content">
+    <header class="page-header">
+      <p class="eyebrow">THE NOTEBOOK</p>
+      <h1>
+        Ideas worth
+        <br />
+        <em>following.</em>
+      </h1>
+      <p>
+        A place for notes, experiments, and the occasional rabbit hole.
+        Somewhere between software, music, and what comes next.
+      </p>
+    </header>
+    <div class="filter-bar">
+      <div
+        class="filter-buttons"
+        role="group"
+        aria-label="Filter articles by topic"
+      >
+        {['All', 'Coding', 'Music', 'AI'].map((category) => (
+          <button
+            type="button"
+            data-filter={category}
+            aria-pressed={category === 'All'}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      <label class="search-label">
+        Find a note{' '}
+        <input type="search" id="post-search" placeholder="Search writing…" />
+      </label>
+    </div>
+    <div class="post-grid" id="post-list">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+    <p class="empty-state" id="empty-state" hidden>
+      No notes found. Try another topic or search.
+    </p>
+    <p
+      class="sr-only"
+      id="filter-status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></p>
+  </div>
+</Layout>
+<script>
+  let selected = 'All';
+  const search = document.querySelector<HTMLInputElement>('#post-search')!;
+  const cards = document.querySelectorAll<HTMLElement>('#post-list .post-card');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  function filter() {
+    const query = search.value.trim().toLowerCase();
+    let count = 0;
+    cards.forEach((card) => {
+      const match =
+        (selected === 'All' || card.dataset.category === selected) &&
+        (card.dataset.search || '').includes(query);
+      card.hidden = !match;
+      if (match) count++;
+    });
+    document.querySelector<HTMLElement>('#empty-state')!.hidden = count > 0;
+    document.querySelector<HTMLElement>('#filter-status')!.textContent =
+      `${count} ${count === 1 ? 'article' : 'articles'} found`;
+  }
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      selected = button.dataset.filter || 'All';
+      buttons.forEach((item) =>
+        item.setAttribute('aria-pressed', String(item === button)),
+      );
+      filter();
+    }),
+  );
+  search.addEventListener('input', filter);
+</script>

@@ -1,0 +1,26 @@
+---
+import ProjectArt from './ProjectArt.astro';
+import Icon from './Icon.astro';
+import { projects } from '../data/site';
+interface Props {
+  project: (typeof projects)[number];
+}
+const { project } = Astro.props;
+---
+
+<a class="project-card" href={`/projects/${project.slug}/`}>
+  <ProjectArt type={project.art} />
+  <div class="project-card-body">
+    <p class="eyebrow">{project.category}</p>
+    <h3>
+      {project.name}
+      <Icon name="northeast" />
+    </h3>
+    <p>{project.description}</p>
+    <div class="tags">
+      {project.tags.map((tag) => (
+        <span>{tag}</span>
+      ))}
+    </div>
+  </div>
+</a>

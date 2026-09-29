@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div class="signal" aria-label="Interactive signal field">
+  <div class="signal-top">
+    <span>
+      <span class="status-dot"></span> A LITTLE CONTROLLED CHAOS
+    </span>
+    <span>FIG. 001</span>
+  </div>
+  <div class="signal-stage">
+    <div class="signal-guide guide-horizontal"></div>
+    <div class="signal-guide guide-vertical"></div>
+    <canvas
+      id="signal-canvas"
+      role="img"
+      aria-label="An orbital particle sculpture. Use the controls below to change its shape."
+    ></canvas>
+    <span class="signal-coordinate">
+      x / curiosity
+      <br />y / possibility
+    </span>
+    <span class="signal-cross">+</span>
+  </div>
+  <div class="signal-bottom">
+    <div class="signal-modes" role="group" aria-label="Signal shape">
+      <button type="button" data-mode="code" aria-pressed="true">
+        <Icon name="code" size={15} /> Code
+      </button>
+      <button type="button" data-mode="music" aria-pressed="false">
+        <Icon name="music" size={15} /> Music
+      </button>
+      <button type="button" data-mode="ai" aria-pressed="false">
+        <Icon name="spark" size={15} /> AI
+      </button>
+    </div>
+    <button
+      type="button"
+      class="motion-toggle"
+      aria-pressed="false"
+      aria-label="Pause animation"
+    >
+      Ⅱ
+    </button>
+  </div>
+  <p class="signal-hint">Move your cursor. Follow your curiosity.</p>
+</div>
+<script>
+  import '../scripts/signal';
+</script>

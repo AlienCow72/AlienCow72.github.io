@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectArt from '../../components/ProjectArt.astro';
+import Icon from '../../components/Icon.astro';
+import { projects } from '../../data/site';
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+const { project } = Astro.props;
+---
+
+<Layout title={project.name} description={project.description}>
+  <article class="wrap article-shell">
+    <a class="text-link back-link" href="/projects/">
+      <Icon size={16} /> Back to projects
+    </a>
+    <header class="page-header">
+      <p class="eyebrow">
+        {project.category} / {project.name}
+      </p>
+      <h1>{project.title}</h1>
+      <p>{project.intro}</p>
+      <div class="tags">
+        {project.tags.map((tag: string) => (
+          <span>{tag}</span>
+        ))}
+      </div>
+    </header>
+    <div class="project-detail-art">
+      <ProjectArt type={project.art} />
+    </div>
+    <div class="prose">
+      {project.sections.map((section: { title: string; text: string }) => (
+        <section>
+          <h2>{section.title}</h2>
+          <p>{section.text}</p>
+        </section>
+      ))}
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+const services = [
+  {
+    icon: 'code',
+    title: 'Software that fits.',
+    description:
+      'Purposeful applications built around the way your business actually works.',
+    items: [
+      'Web application development',
+      'Python & Django',
+      'Existing application improvements',
+    ],
+  },
+  {
+    icon: 'spark',
+    title: 'Systems that connect.',
+    description:
+      'Help your tools talk to each other, so your team can spend less time moving information.',
+    items: [
+      'API & platform integrations',
+      'ERP & commerce workflows',
+      'Data flows & process automation',
+    ],
+  },
+  {
+    icon: 'music',
+    title: 'A path through the noise.',
+    description:
+      'A practical technical perspective, from the first requirements conversation to go-live.',
+    items: [
+      'Technical discovery & planning',
+      'Troubleshooting & implementation',
+      'Documentation & ongoing support',
+    ],
+  },
+];
+---
+
+<Layout
+  title={site.business}
+  description="KMA consultant — software development, integrations, and practical technical guidance from Kyle Anderson."
+>
+  <div class="wrap page-content">
+    <header class="page-header">
+      <p class="eyebrow">{site.business}</p>
+      <h1>
+        Your next challenge.
+        <br />
+        <em>A thoughtful solution.</em>
+      </h1>
+      <p>
+        I’m Kyle Anderson, a developer and technical consultant. I help turn
+        business problems into useful software, connected systems, and clearer
+        next steps.
+      </p>
+    </header>
+    <div class="service-grid">
+      {services.map((service) => (
+        <section class="service-card">
+          <Icon name={service.icon} size={28} />
+          <h2>{service.title}</h2>
+          <p>{service.description}</p>
+          <ul>
+            {service.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+    <section class="process">
+      <div>
+        <p class="section-index">HOW WE WORK TOGETHER</p>
+        <h2>
+          Understand first.
+          <br />
+          <em>Build with purpose.</em>
+        </h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <span>01</span>
+          <div>
+            <h3>Start with a conversation.</h3>
+            <p>
+              What’s working, what isn’t, and what would make a difference? We
+              start with the problem and the people using the system.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span>02</span>
+          <div>
+            <h3>Find a practical direction.</h3>
+            <p>
+              Define the scope, understand the constraints, and agree on a
+              sensible approach before the implementation begins.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span>03</span>
+          <div>
+            <h3>Build, refine, and hand over.</h3>
+            <p>
+              Stay in touch as the work takes shape. Test the result, document
+              the decisions, and make sure your team can use what we build.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="contact-panel">
+      <h2>
+        Tell me what you’re working on<span class="gold">.</span>
+      </h2>
+      <p>
+        A quick introduction, a stubborn technical problem, or an idea you’re
+        ready to explore. Send a little context about your project and what
+        you’d like to achieve.
+      </p>
+      <a
+        class="button"
+        href={`mailto:${site.email}?subject=${encodeURIComponent('A project for KMA consultant')}`}
+      >
+        Start a conversation <Icon name="northeast" size={18} />
+      </a>
+      <a class="contact-email" href={`mailto:${site.email}`}>
+        {site.email}
+      </a>
+    </section>
+  </div>
+</Layout>

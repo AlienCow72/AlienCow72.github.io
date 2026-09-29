@@ -1,0 +1,104 @@
+---
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+import Icon from '../components/Icon.astro';
+import BrandMark from '../components/BrandMark.astro';
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+const pageTitle = title
+  ? `${title} — ${site.name}`
+  : `${site.name} — A curious mind. A builder at heart.`;
+const links = [
+  ['/', 'Home'],
+  ['/blog/', 'Writing'],
+  ['/projects/', 'Projects'],
+  ['/consulting/', 'Consulting'],
+];
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#242628" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Kyle Anderson — Writing"
+      href="/rss.xml"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(path, Astro.site)} />
+    <meta
+      property="og:image"
+      content={new URL('/social-card.png', Astro.site)}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">
+      Skip to content
+    </a>
+    <header class="site-header wrap">
+      <a class="brand" href="/" aria-label="Kyle Anderson home">
+        <BrandMark class="home-mark" />
+        <span>
+          Kyle Anderson<span class="brand-period">.</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        {links.map(([href, label]) => (
+          <a
+            href={href}
+            aria-current={
+              (href === '/' ? path === '/' : path.startsWith(href))
+                ? 'page'
+                : undefined
+            }
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+      <a class="header-contact" href={`mailto:${site.email}`}>
+        Let’s talk <Icon name="northeast" size={16} />
+      </a>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer wrap">
+      <a class="brand footer-brand" href="/">
+        <span class="monogram">
+          k<span>.</span>
+        </span>
+        <span>Always a work in progress.</span>
+      </a>
+      <div class="footer-links">
+        <a href={site.github}>
+          GitHub <Icon name="northeast" size={13} />
+        </a>
+        <a href={site.linkedin}>
+          LinkedIn <Icon name="northeast" size={13} />
+        </a>
+        <a href="/rss.xml">
+          RSS <Icon name="rss" size={13} />
+        </a>
+      </div>
+      <p>© {new Date().getFullYear()} Kyle Anderson</p>
+    </footer>
+  </body>
+</html>

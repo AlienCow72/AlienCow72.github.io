@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects, site } from '../../data/site';
+import Icon from '../../components/Icon.astro';
+---
+
+<Layout
+  title="Projects"
+  description="Selected work in software development, platform integrations, data, and automation by Kyle Anderson."
+>
+  <div class="wrap page-content">
+    <header class="page-header">
+      <p class="eyebrow">THE WORKBENCH</p>
+      <h1>
+        Good ideas deserve
+        <br />
+        <em>to be built.</em>
+      </h1>
+      <p>
+        A selection of things I’ve helped connect, untangle, and bring to life.
+        Real problems, thoughtful solutions.
+      </p>
+    </header>
+    <div class="project-grid">
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </div>
+  <section class="closing wrap">
+    <span class="eyebrow">MORE EXPERIMENTS, MORE OPEN TABS.</span>
+    <a href={site.github}>
+      Explore my <em>GitHub.</em>
+      <Icon name="northeast" size={32} />
+    </a>
+  </section>
+</Layout>

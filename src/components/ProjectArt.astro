@@ -1,0 +1,50 @@
+---
+interface Props {
+  type: string;
+}
+const { type } = Astro.props;
+---
+
+<div class:list={['project-art', `art-${type}`]} aria-hidden="true">
+  {type === 'integration' ? (
+    <>
+      <span class="diagram-label">CONNECTED BY DESIGN</span>
+      <div class="integration-diagram">
+        <span class="diagram-node">ERP</span>
+        <span class="diagram-line"></span>
+        <span class="diagram-core">
+          D<span>↗</span>
+        </span>
+        <span class="diagram-line"></span>
+        <span class="diagram-node">TAX</span>
+      </div>
+      <span class="diagram-foot">ONE PLATFORM. MORE POSSIBILITIES.</span>
+    </>
+  ) : type === 'data' ? (
+    <>
+      <span class="diagram-label">FINDING THE BIGGER PICTURE</span>
+      <div class="data-diagram">
+        {Array.from({ length: 28 }, (_, i) => (
+          <span style={`--bar: ${18 + ((i * 37) % 75)}%; --i: ${i}`} />
+        ))}
+      </div>
+      <span class="diagram-foot">RECORDS → RELATIONSHIPS → INSIGHT</span>
+    </>
+  ) : (
+    <>
+      <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
+      <div class="web-diagram">
+        <span class="tiny-nav">
+          k. <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
+        </span>
+        <span class="tiny-title">
+          Stay
+          <br />
+          <em>curious.</em>
+        </span>
+        <span class="tiny-orbit"></span>
+      </div>
+      <span class="diagram-foot">BUILT WITH ASTRO. MADE TO EXPLORE.</span>
+    </>
+  )}
+</div>

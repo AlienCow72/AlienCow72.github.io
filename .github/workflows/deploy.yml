@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: 'npm'
 
       - name: Setup Pages
@@ -34,7 +34,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build with vite
+      - name: Validate source
+        run: npm run lint && npm run prettier
+
+      - name: Build Astro
         run: npm run build
 
       - name: Upload artifact
