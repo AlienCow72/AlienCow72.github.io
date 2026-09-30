@@ -7,5 +7,8 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   integrations: [sitemap()],
+  server: {
+    allowedHosts: ['kys-m2-macbook-pro.tail5e62a5.ts.net'],
+  },
   devToolbar: { enabled: false },
 });

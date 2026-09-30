@@ -39,6 +39,19 @@ import Icon from './Icon.astro';
       Ⅱ
     </button>
   </div>
+  <div class="signal-tilt" hidden>
+    <button
+      type="button"
+      class="tilt-toggle"
+      aria-pressed="false"
+      aria-describedby="tilt-status"
+    >
+      Enable tilt
+    </button>
+    <p id="tilt-status" class="tilt-status" role="status" aria-atomic="true">
+      Let your phone's tilt guide the sculpture.
+    </p>
+  </div>
   <p class="signal-hint">Move your cursor. Follow your curiosity.</p>
 </div>
 <script>

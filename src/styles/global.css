@@ -374,6 +374,37 @@ h1 {
   border-color: var(--gold);
   color: var(--gold);
 }
+.signal-tilt {
+  margin-top: 14px;
+  text-align: center;
+}
+.signal-tilt[hidden] {
+  display: none;
+}
+.tilt-toggle {
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+.tilt-toggle:hover,
+.tilt-toggle[aria-pressed='true'] {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.tilt-toggle:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.tilt-status {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
 .signal-hint {
   text-align: center;
   color: #999b99;
