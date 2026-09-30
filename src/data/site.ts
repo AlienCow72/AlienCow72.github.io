@@ -1,6 +1,6 @@
 export const site = {
   name: 'Kyle Anderson',
-  business: 'KMA consultant',
+  business: 'KMA Consulting',
   email: 'andersonktech@icloud.com',
   github: 'https://github.com/AlienCow72',
   linkedin: 'https://www.linkedin.com/in/kyle-anderson-mke/',

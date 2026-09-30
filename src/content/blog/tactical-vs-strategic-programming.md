@@ -35,7 +35,7 @@ Moving forward, it's important to know:
 1. Our role as programmers and engineers.
 2. How to leverage AI effectively without compromising code quality and maintainability.
 3. How to make strategic decisions that guide the long-term direction of our projects.
-
-- Are we keeping the code base simple and easily maintainable or are we letting the AI run a muck, introducing unnecessary complexity, and rewriting logic that we used elsewhere in the app, but it decided to not reuse it or improve upon it
+    
+- Are we keeping the code base simple and easily maintainable or are we letting the AI run amok, introducing unnecessary complexity, and rewriting logic that we used elsewhere in the app, but it decided to not reuse it or improve upon it
 - Are we making thoughtful architectural decisions or are we blindly following AI suggestions without considering long-term implications?
 - Are we continuously evaluating and improving our strategic decisions, or are we letting AI dictate the direction without human oversight?
