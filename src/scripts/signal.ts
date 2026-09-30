@@ -4,6 +4,7 @@ import {
   type Particle,
   type Sculpture,
 } from './signal-shapes';
+import { setupSignalTilt } from './signal-tilt';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#signal-canvas');
 const ctx = canvas?.getContext('2d');
@@ -21,10 +22,20 @@ if (canvas && ctx) {
   let visible = true;
   let pointerX = 0;
   let pointerY = 0;
+  let tiltX = 0;
+  let tiltY = 0;
   let rotationX = 0;
   let rotationY = 0;
 
   const shapes = createSignalShapes();
+  const tilt = setupSignalTilt({
+    isActive: () => !paused && visible && !document.hidden,
+    isPaused: () => paused,
+    onChange: (x, y) => {
+      tiltX = x;
+      tiltY = y;
+    },
+  });
 
   function draw() {
     if (!canvas || !ctx) return;
@@ -100,14 +111,15 @@ if (canvas && ctx) {
     if (paused || !visible || document.hidden) return;
     if (lastTime) time += Math.min((timestamp - lastTime) / 1000, 0.05);
     lastTime = timestamp;
-    rotationX += (pointerX - rotationX) * 0.045;
-    rotationY += (pointerY - rotationY) * 0.045;
+    rotationX += ((tilt.enabled ? tiltX : pointerX) - rotationX) * 0.045;
+    rotationY += ((tilt.enabled ? tiltY : pointerY) - rotationY) * 0.045;
     draw();
     frame = requestAnimationFrame(tick);
   }
   function schedule() {
     cancelAnimationFrame(frame);
     lastTime = 0;
+    tilt.syncActivity();
     if (!paused && visible && !document.hidden)
       frame = requestAnimationFrame(tick);
   }
