@@ -165,10 +165,31 @@ svg {
 .hero {
   min-height: 590px;
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   align-items: center;
   gap: 42px;
   padding-block: 65px 64px;
+}
+.hero-portrait {
+  width: 100%;
+  max-width: 400px;
+  justify-self: end;
+  mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    #000 62%,
+    transparent 100%
+  );
+}
+.hero-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+.hero-signal {
+  padding-bottom: 48px;
 }
 .hero-eyebrow {
   font-size: 9px;
@@ -1128,7 +1149,7 @@ h1 {
     display: none;
   }
   .hero {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     padding-block: 55px;
     min-height: 520px;
   }
@@ -1319,27 +1340,46 @@ h1 {
     font-size: 11px;
   }
   .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) minmax(100px, 32%);
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'heading portrait'
+      'description description'
+      'actions actions'
+      'note note';
     padding-block: 46px 32px;
-    gap: 39px;
+    min-height: 0;
+    gap: 0 12px;
+  }
+  .hero-copy {
+    display: contents;
+  }
+  .hero-portrait {
+    grid-area: portrait;
+    align-self: center;
+  }
+  .hero-signal {
+    padding-bottom: 32px;
   }
   .hero-eyebrow {
+    grid-area: eyebrow;
     font-size: 7px;
     letter-spacing: 1px;
     margin-bottom: 24px;
   }
   .hero h1 {
-    font-size: clamp(45px, 10.5vw, 62px);
-    letter-spacing: -1.5px;
+    grid-area: heading;
+    font-size: clamp(32px, 7.6vw, 45px);
+    letter-spacing: -1px;
   }
   .hero-description {
+    grid-area: description;
     font-size: 13px;
     max-width: 340px;
     margin-top: 20px;
   }
   .hero-actions {
+    grid-area: actions;
     flex-direction: row;
     align-items: center;
     gap: 22px;
@@ -1356,6 +1396,7 @@ h1 {
     padding: 13px 15px;
   }
   .hero-note {
+    grid-area: note;
     font-size: 8px;
     margin-top: 24px;
   }

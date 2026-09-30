@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import headshot from '../assets/kyle-anderson.jpg';
 import Layout from '../layouts/Layout.astro';
 import SignalField from '../components/SignalField.astro';
 import Icon from '../components/Icon.astro';
@@ -40,8 +42,21 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         thinking, and everything in between.
       </div>
     </div>
-    <SignalField />
+    <div class="hero-portrait">
+      <Image
+        src={headshot}
+        alt="Kyle Anderson"
+        widths={[240, 400, 600, 800]}
+        sizes="(max-width: 600px) 32vw, (max-width: 1100px) 38vw, 400px"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
   </section>
+  <div class="hero-signal wrap">
+    <SignalField />
+  </div>
   <div class="interest-strip">
     <div class="wrap">
       <span>GOOD THINGS HAPPEN AT THE INTERSECTIONS</span>
