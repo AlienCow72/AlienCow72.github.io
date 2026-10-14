@@ -137,7 +137,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 13px;
-  font-size: 1.125rem;
+  font-size: 1.75rem;
   font-weight: 550;
 }
 .home-mark {
@@ -198,7 +198,7 @@ svg {
 }
 .hero-portrait {
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   justify-self: end;
   mask-image: radial-gradient(
     ellipse 50% 50% at 50% 50%,
@@ -455,33 +455,6 @@ h1 {
   color: var(--muted);
   font-size: 1rem;
   margin-top: 12px;
-}
-.interest-strip {
-  border-block: 1px solid var(--line);
-  background: #ffffff02;
-}
-.interest-strip > .wrap {
-  min-height: 73px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-.interest-strip > .wrap > span {
-  font-size: 1rem;
-  color: var(--muted);
-  letter-spacing: 0;
-}
-.interest-strip > .wrap > div {
-  display: flex;
-  align-items: center;
-  gap: 23px;
-  flex-wrap: wrap;
-  font-size: 1rem;
-}
-.interest-strip div div span {
-  color: var(--gold);
-  font-size: 1.25rem;
 }
 .section {
   padding-block: 86px;
@@ -1190,13 +1163,6 @@ h1 {
   .wrap {
     width: calc(100% - 64px);
   }
-  .interest-strip > .wrap > div {
-    gap: 14px;
-  }
-  .interest-strip > .wrap > span {
-    max-width: 180px;
-    line-height: 1.7;
-  }
   .about-layout {
     gap: 50px;
   }
@@ -1220,17 +1186,6 @@ h1 {
   }
 }
 @media (max-width: 800px) {
-  .interest-strip > .wrap {
-    min-height: 70px;
-  }
-  .interest-strip > .wrap > span {
-    font-size: 0.875rem;
-    max-width: 120px;
-  }
-  .interest-strip > .wrap > div {
-    font-size: 0.875rem;
-    gap: 10px;
-  }
   .section {
     padding-block: 60px;
   }
@@ -1337,23 +1292,6 @@ h1 {
 @media (max-width: 600px) {
   .wrap {
     width: calc(100% - 40px);
-  }
-  .interest-strip > .wrap {
-    flex-direction: column;
-    justify-content: center;
-    gap: 12px;
-    padding-block: 20px;
-  }
-  .interest-strip > .wrap > span {
-    max-width: none;
-    font-size: 0.875rem;
-  }
-  .interest-strip > .wrap > div {
-    font-size: 0.875rem;
-    gap: 10px;
-  }
-  .interest-strip div div span {
-    font-size: 1rem;
   }
   .about-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1623,7 +1561,7 @@ h1 {
     font-size: clamp(3rem, 5.8vw, 4rem);
   }
   .hero-portrait {
-    max-width: 280px;
+    max-width: 350px;
   }
   .signal {
     column-gap: 24px;
@@ -1642,10 +1580,10 @@ h1 {
     display: none;
   }
   .hero {
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   }
   .hero h1 {
-    font-size: clamp(2.75rem, 5.9vw, 3.4rem);
+    font-size: clamp(2.25rem, 5.9vw, 3.4rem);
   }
   .hero-eyebrow {
     font-size: 1rem;
@@ -1654,7 +1592,7 @@ h1 {
     font-size: 1.125rem;
   }
   .hero-portrait {
-    max-width: 250px;
+    max-width: 320px;
   }
   .hero-actions {
     gap: 12px 20px;
@@ -1670,21 +1608,6 @@ h1 {
   }
   .signal-stage {
     height: 240px;
-  }
-  .interest-strip > .wrap {
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: center;
-    padding-block: 20px;
-    gap: 12px;
-  }
-  .interest-strip > .wrap > span {
-    max-width: none;
-    font-size: 1rem;
-    letter-spacing: 0;
-  }
-  .interest-strip > .wrap > div {
-    font-size: 1rem;
   }
   .process {
     grid-template-columns: 1fr;
@@ -1732,7 +1655,7 @@ h1 {
     right: 8px;
   }
   .hero {
-    grid-template-columns: minmax(0, 1fr) 112px;
+    grid-template-columns: minmax(0, 1fr) 160px;
     grid-template-areas: 'eyebrow portrait' 'heading heading' 'description description' 'actions actions' 'signal signal';
     gap: 0 16px;
     padding-block: 24px 32px;
@@ -1742,7 +1665,7 @@ h1 {
   }
   .hero-portrait {
     grid-area: portrait;
-    max-width: 112px;
+    max-width: 160px;
   }
   .hero-eyebrow {
     grid-area: eyebrow;
@@ -1871,6 +1794,12 @@ h1 {
 }
 
 @media (max-width: 360px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) 140px;
+  }
+  .hero-portrait {
+    max-width: 140px;
+  }
   .site-header nav a {
     padding-inline: 4px;
   }
