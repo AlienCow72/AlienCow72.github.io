@@ -15,8 +15,15 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 <Layout>
   <section class="hero wrap">
+    <p class="eyebrow hero-eyebrow">
+      <span class="gold-line" aria-hidden="true"></span>
+      <span class="hero-tagline">
+        <span>Developer.</span>
+        <span>Consultant.</span>
+        <span>Endlessly curious.</span>
+      </span>
+    </p>
     <div class="hero-copy">
-      <p class="eyebrow hero-eyebrow"><span class="gold-line"></span> DEVELOPER. CONSULTANT. ENDLESSLY CURIOUS.</p>
       <h1>
         A curious mind.
         <br />A <em>builder</em> at heart.

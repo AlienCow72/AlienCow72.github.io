@@ -219,6 +219,7 @@ svg {
   margin-top: 12px;
 }
 .hero-eyebrow {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -239,6 +240,12 @@ svg {
 }
 .hero-tagline {
   min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.65em;
+}
+.hero-tagline > span {
+  white-space: nowrap;
 }
 .home-section-index {
   font-size: 1rem;
@@ -1656,7 +1663,7 @@ h1 {
   }
   .hero {
     grid-template-columns: minmax(0, 1fr) 160px;
-    grid-template-areas: 'eyebrow portrait' 'heading heading' 'description description' 'actions actions' 'signal signal';
+    grid-template-areas: 'eyebrow eyebrow' 'heading portrait' 'description description' 'actions actions' 'signal signal';
     gap: 0 16px;
     padding-block: 24px 32px;
   }
@@ -1669,20 +1676,14 @@ h1 {
   }
   .hero-eyebrow {
     grid-area: eyebrow;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
     font-size: 1rem;
     max-width: none;
-    margin: 0;
-  }
-  .hero-tagline > span {
-    display: block;
+    margin: 0 0 20px;
   }
   .hero h1 {
     grid-area: heading;
     font-size: clamp(2.25rem, 10.4vw, 3.75rem);
-    margin-top: 20px;
+    margin-top: 0;
   }
   .hero-description {
     grid-area: description;
@@ -1799,6 +1800,9 @@ h1 {
   }
   .hero-portrait {
     max-width: 140px;
+  }
+  .hero h1 {
+    font-size: 1.875rem;
   }
   .site-header nav a {
     padding-inline: 4px;
