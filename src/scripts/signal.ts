@@ -140,6 +140,7 @@ if (canvas && ctx) {
     canvas.height = height * ratio;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     draw();
+    canvas.closest('.signal')?.setAttribute('data-ready', '');
   }).observe(canvas);
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;

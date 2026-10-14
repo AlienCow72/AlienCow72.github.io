@@ -17,11 +17,18 @@ export function setupSignalTilt(options: TiltOptions) {
   const hint = document.querySelector<HTMLElement>('.signal-hint');
   const orientation = window.DeviceOrientationEvent as
     OrientationWithPermission | undefined;
-  const supported =
-    window.isSecureContext &&
-    orientation &&
-    (navigator.maxTouchPoints > 0 ||
-      window.matchMedia('(any-pointer: coarse)').matches);
+  const touchCapable =
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia('(any-pointer: coarse)').matches;
+  const mobileLayout = window.matchMedia('(max-width: 900px)');
+  const supported = Boolean(
+    window.isSecureContext && orientation && touchCapable,
+  );
+  const unavailableMessage = !window.isSecureContext
+    ? 'Tilt requires HTTPS. Open this site using a secure connection.'
+    : !orientation
+      ? 'Tilt is unavailable in this browser. You can still use the usual controls.'
+      : 'Tilt needs a phone or tablet with motion sensors.';
   let enabled = false;
   let pending = false;
   let listening = false;
@@ -31,6 +38,11 @@ export function setupSignalTilt(options: TiltOptions) {
 
   function updateControl() {
     if (!button || !status) return;
+    if (!supported) {
+      button.disabled = true;
+      status.textContent = unavailableMessage;
+      return;
+    }
     button.textContent = pending
       ? 'Enabling tilt…'
       : enabled
@@ -114,13 +126,21 @@ export function setupSignalTilt(options: TiltOptions) {
     updateControl();
   }
 
-  if (supported && container && button && status) {
-    container.hidden = false;
-    if (hint)
-      hint.textContent =
-        'Touch the field, or enable tilt. Follow your curiosity.';
+  if (container && button && status) {
+    const updateVisibility = () => {
+      container.hidden = !(supported || touchCapable || mobileLayout.matches);
+      if (hint)
+        hint.textContent = supported
+          ? 'Touch the field, or enable tilt. Follow your curiosity.'
+          : mobileLayout.matches || touchCapable
+            ? 'Touch the field. Follow your curiosity.'
+            : 'Move your cursor. Follow your curiosity.';
+      updateControl();
+    };
+    mobileLayout.addEventListener('change', updateVisibility);
+    updateVisibility();
     button.addEventListener('click', async () => {
-      if (pending) return;
+      if (!supported || pending) return;
       if (enabled) {
         disable('Tilt is off. Touch the field to turn the sculpture.');
         return;
@@ -130,7 +150,7 @@ export function setupSignalTilt(options: TiltOptions) {
       updateControl();
       try {
         // Call directly during the tap so Safari retains user activation.
-        const permission = orientation.requestPermission
+        const permission = orientation?.requestPermission
           ? await orientation.requestPermission()
           : 'granted';
         if (permission === 'granted') {

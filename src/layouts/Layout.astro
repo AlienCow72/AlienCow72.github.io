@@ -78,30 +78,32 @@ const path = Astro.url.pathname;
     <a href="#main" class="skip-link">
       Skip to content
     </a>
-    <header class="site-header wrap">
-      <a class="brand" href="/" aria-label="Kyle Anderson home">
-        <HeaderParticleMark />
-        <span>
-          Kyle Anderson<span class="brand-period">.</span>
-        </span>
-      </a>
-      <nav aria-label="Main navigation">
-        {links.map(([href, label]) => (
-          <a
-            href={href}
-            aria-current={
-              (href === '/' ? path === '/' : path.startsWith(href))
-                ? 'page'
-                : undefined
-            }
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-      <a class="header-contact" href={`mailto:${site.email}`}>
-        Let’s talk <Icon name="northeast" size={16} />
-      </a>
+    <header class="site-header">
+      <div class="header-inner wrap">
+        <a class="brand" href="/" aria-label="Kyle Anderson home">
+          <HeaderParticleMark />
+          <span>
+            Kyle Anderson<span class="brand-period">.</span>
+          </span>
+        </a>
+        <nav aria-label="Main navigation">
+          {links.map(([href, label]) => (
+            <a
+              href={href}
+              aria-current={
+                (href === '/' ? path === '/' : path.startsWith(href))
+                  ? 'page'
+                  : undefined
+              }
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <a class="header-contact" href={`mailto:${site.email}`}>
+          Let’s talk <Icon name="northeast" size={16} />
+        </a>
+      </div>
     </header>
     <main id="main" tabindex="-1">
       <slot />

@@ -15,19 +15,22 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 <Layout>
   <section class="hero wrap">
+    <p class="eyebrow hero-eyebrow">
+      <span class="gold-line" aria-hidden="true"></span>
+      <span class="hero-tagline">
+        <span>Developer.</span>
+        <span>Consultant.</span>
+        <span>Endlessly curious.</span>
+      </span>
+    </p>
     <div class="hero-copy">
-      <p class="eyebrow hero-eyebrow">
-        <span class="gold-line"></span> DEVELOPER. CONSULTANT. ENDLESSLY
-        CURIOUS.
-      </p>
       <h1>
         A curious mind.
         <br />A <em>builder</em> at heart.
       </h1>
       <p class="hero-description">
-        I’m Kyle. I connect systems, turn ideas into software,
-        <br class="desktop-break" /> and find inspiration somewhere between code
-        and music.
+        I’m Kyle. I connect systems, turn ideas into software, and find
+        inspiration somewhere between code and music.
       </p>
       <div class="hero-actions">
         <a class="button" href="/projects/">
@@ -37,39 +40,26 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           A few things on my mind <Icon name="arrow" size={17} />
         </a>
       </div>
-      <div class="hero-note">
-        <span class="small-plus">+</span> A personal space for building,
-        thinking, and everything in between.
-      </div>
     </div>
     <div class="hero-portrait">
       <Image
         src={headshot}
         alt="Kyle Anderson"
         widths={[240, 400, 600, 800]}
-        sizes="(max-width: 600px) 32vw, (max-width: 1100px) 38vw, 400px"
+        sizes="(max-width: 360px) 140px, (max-width: 600px) 160px, (max-width: 900px) 320px, (max-width: 1100px) 350px, 400px"
         format="webp"
         loading="eager"
         fetchpriority="high"
       />
     </div>
-  </section>
-  <div class="hero-signal wrap">
-    <SignalField />
-  </div>
-  <div class="interest-strip">
-    <div class="wrap">
-      <span>GOOD THINGS HAPPEN AT THE INTERSECTIONS</span>
-      <div>
-        Software <span>✳</span> Systems <span>✳</span> Music <span>✳</span> AI{' '}
-        <span>✳</span> Human curiosity
-      </div>
+    <div class="hero-signal">
+      <SignalField />
     </div>
-  </div>
+  </section>
   <section class="section wrap" id="about">
     <div class="about-layout">
-      <div class="section-label">
-        <span>01 / A LITTLE ABOUT ME</span>
+      <div>
+        <p class="section-index home-section-index">01 / A LITTLE ABOUT ME</p>
         <h2>
           Practical by nature.
           <br />
@@ -96,7 +86,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <section class="section selected-work wrap">
     <div class="section-heading">
       <div>
-        <p class="section-index">02 / SELECTED WORK</p>
+        <p class="section-index home-section-index">02 / PROJECTS</p>
         <h2>
           Ideas, put to work<span class="gold">.</span>
         </h2>
@@ -130,9 +120,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <section class="section wrap writing-section">
     <div class="section-heading">
       <div>
-        <p class="section-index">03 / NOTES & EXPLORATIONS</p>
+        <p class="section-index home-section-index">
+          03 / NOTES &amp; EXPLORATIONS
+        </p>
         <h2>
-          A few things on my mind<span class="gold">.</span>
+          Ideas worth following<span class="gold">.</span>
         </h2>
       </div>
       <a class="text-link" href="/blog/">
@@ -146,7 +138,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
   </section>
   <section class="closing wrap">
-    <span class="eyebrow">A GOOD CONVERSATION IS A GOOD START.</span>
     <a href={`mailto:${site.email}`}>
       Have something in mind? <em>Let’s talk.</em>
       <Icon name="northeast" size={32} />
