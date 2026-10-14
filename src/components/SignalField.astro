@@ -2,21 +2,33 @@
 import Icon from './Icon.astro';
 ---
 
-<div class="signal" aria-label="Interactive signal field">
+<div class="signal" role="group" aria-label="Interactive signal field">
   <div class="signal-top">
     <span>
-      <span class="status-dot"></span> A LITTLE CONTROLLED CHAOS
+      <span class="status-dot"></span> A little controlled chaos
     </span>
-    <span>FIG. 001</span>
   </div>
   <div class="signal-stage">
-    <div class="signal-guide guide-horizontal"></div>
-    <div class="signal-guide guide-vertical"></div>
+    <svg
+      class="signal-fallback"
+      viewBox="0 0 500 240"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="m190 65-70 55 70 55m120-110 70 55-70 55m-30-135-60 160"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-dasharray="1 5"
+        stroke-linecap="round"
+      />
+    </svg>
     <canvas
       id="signal-canvas"
       role="img"
       aria-label="A three-dimensional particle sculpture of a code symbol. Use the controls below to change its shape."
     ></canvas>
+    <span class="signal-figure">FIG. 001</span>
   </div>
   <div class="signal-bottom">
     <div class="signal-modes" role="group" aria-label="Signal shape">
