@@ -1,5 +1,6 @@
 ---
 import DstaxMark from './DstaxMark.astro';
+import BrandMark from './BrandMark.astro';
 import personalMark from '../assets/brand/personal-mark-yellow.svg';
 
 interface Props {
@@ -138,7 +139,34 @@ const barHeights = [
             <br />
             <em>curious.</em>
           </span>
-          <span class="tiny-orbit"></span>
+          <span class="tiny-orbit">
+            <svg class="orbit-art" viewBox="0 0 100 100" fill="none">
+              <g class="orbit-rest" stroke="currentColor">
+                <ellipse cx="50" cy="50" rx="44" ry="20" />
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx="44"
+                  ry="20"
+                  transform="rotate(60 50 50)"
+                />
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx="44"
+                  ry="20"
+                  transform="rotate(120 50 50)"
+                />
+                <circle cx="94" cy="50" r="3" fill="currentColor" />
+                <circle cx="28" cy="12" r="3" fill="currentColor" />
+                <circle cx="28" cy="88" r="3" fill="currentColor" />
+              </g>
+              <g class="orbit-morph" stroke="currentColor" />
+              <g class="orbit-brand">
+                <BrandMark size={100} />
+              </g>
+            </svg>
+          </span>
         </div>
       </div>
       <span class="diagram-foot">BUILT WITH ASTRO. MADE TO EXPLORE.</span>
@@ -149,9 +177,31 @@ const barHeights = [
 <script>
   import '../scripts/integration-flow';
   import '../scripts/data-sort';
+  import '../scripts/web-orbit';
 </script>
 
 <style>
+  .diagram-stage .tiny-orbit {
+    border: 0;
+    color: var(--orbit-color, #c0b7d3);
+  }
+  .tiny-orbit::before,
+  .tiny-orbit::after {
+    display: none;
+  }
+  .orbit-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .orbit-morph,
+  .orbit-brand {
+    opacity: 0;
+  }
+  .tiny-orbit[data-orbit-state] .orbit-rest {
+    opacity: 0;
+  }
   .integration-diagram {
     position: relative;
   }
