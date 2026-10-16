@@ -4,7 +4,6 @@
   --raised: #323436;
   --text: #eeede7;
   --muted: #c0c1bb;
-  --paper-dot: #ffffff24;
   --header-height: 104px;
   --gold: #e4bc78;
   --line: #ffffff12;
@@ -14,7 +13,8 @@
   font-family: var(--sans);
   font-size: 100%;
   background: var(--bg);
-  background-image: radial-gradient(var(--paper-dot) 0.8px, transparent 0.8px);
+  /* SVG dots stay visible when Safari rasterizes the page at fractional zoom. */
+  background-image: url('/engineering-paper.svg');
   background-size: 24px 24px;
   color: var(--text);
   font-synthesis: none;
