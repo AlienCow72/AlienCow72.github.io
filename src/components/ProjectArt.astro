@@ -89,35 +89,126 @@ const barHeights = [
     </>
   ) : type === 'resume' ? (
     <>
-      <span class="diagram-label">ONE RÉSUMÉ. ROOM TO ADAPT.</span>
+      <span class="diagram-label">ONE MASTER. MANY RÉSUMÉS.</span>
       <div class="diagram-stage">
         <svg class="resume-diagram" viewBox="0 0 360 250" fill="none">
-          <rect x="40" y="16" width="200" height="218" fill="#25282a" />
-          <text x="60" y="49" class="resume-caption">
-            Master résumé
-          </text>
-          <text x="60" y="96" class="resume-name">
-            Kyle Anderson
-          </text>
-          <text x="60" y="129" class="resume-copy">
-            Experience
-          </text>
-          <text x="60" y="157" class="resume-copy">
-            Projects
-          </text>
-          <text x="60" y="185" class="resume-copy">
-            Skills
-          </text>
-          <rect x="185" y="147" width="140" height="83" fill="currentColor" />
-          <text x="203" y="180" class="resume-export">
-            Review. Refine.
-          </text>
-          <text x="203" y="207" class="resume-export">
-            Make it yours.
-          </text>
+          <g class="resume-source" transform="translate(58.5 -5)">
+            <rect x="8" y="30" width="132" height="190" rx="4" fill="#25282a" />
+            <text x="20" y="57" class="resume-copy">
+              Master data
+            </text>
+            {['Experience', 'Projects', 'Skills'].map((label, i) => (
+              <g>
+                <rect
+                  class="resume-selection"
+                  x="17"
+                  y={73 + i * 46}
+                  width="114"
+                  height="35"
+                  rx="3"
+                  fill="currentColor"
+                  opacity="0"
+                />
+                <text x="23" y={89 + i * 46} class="resume-source-label">
+                  {label}
+                </text>
+                <path
+                  d={`M23 ${99 + i * 46}h${i === 1 ? 62 : 88}`}
+                  stroke="currentColor"
+                  stroke-width="2"
+                  opacity="0.4"
+                />
+              </g>
+            ))}
+            <text
+              x="23"
+              y="211"
+              class="resume-source-label"
+              fill="currentColor"
+              opacity="0.45"
+            >
+              Other experience
+            </text>
+            <g class="resume-note" transform="translate(-90 0)">
+              <rect
+                x="185"
+                y="147"
+                width="140"
+                height="83"
+                fill="currentColor"
+              />
+              <text x="203" y="180" class="resume-export">
+                Review. Refine.
+              </text>
+              <text x="203" y="207" class="resume-export">
+                Make it yours.
+              </text>
+            </g>
+          </g>
+          <g class="resume-branch" opacity="0">
+            <path
+              d="M149 126h16 M165 64v122 M165 64h15m-6-6 6 6-6 6 M165 186h15m-6-6 6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+          </g>
+          {['Résumé - ABC', 'Résumé - XYZ'].map((label, version) => (
+            <g class="resume-output" opacity="0">
+              <rect
+                x="181"
+                y={12 + version * 120}
+                width="171"
+                height="106"
+                rx="3"
+                fill="#25282a"
+              />
+              <text x="191" y={34 + version * 120} class="resume-copy">
+                {label}
+              </text>
+              {['Experience', 'Projects', 'Skills'].map((section, i) => (
+                <g class="resume-result-section" opacity="0">
+                  <text
+                    x="191"
+                    y={54 + i * 22 + version * 120}
+                    fill="currentColor"
+                    class="resume-source-label"
+                  >
+                    {section}
+                  </text>
+                  <path
+                    class="resume-result-lines"
+                    d={`M191 ${61 + i * 22 + version * 120}h${(version === 0 ? [140, 100, 124] : [108, 142, 92])[i]}`}
+                    stroke="currentColor"
+                    opacity="0.6"
+                    stroke-width="2"
+                    pathLength="1"
+                    stroke-dasharray="1"
+                    stroke-dashoffset="1"
+                  />
+                </g>
+              ))}
+              <path
+                class="resume-ready"
+                d={`m331 ${30 + version * 120} 4 4 8-10`}
+                stroke="#a2bba7"
+                stroke-width="2"
+                opacity="0"
+              />
+            </g>
+          ))}
+          {Array.from({ length: 6 }, () => (
+            <rect
+              class="resume-data-packet"
+              width="14"
+              height="4"
+              rx="2"
+              fill="currentColor"
+              opacity="0"
+            />
+          ))}
         </svg>
       </div>
-      <span class="diagram-foot">EDIT → REFINE → EXPORT</span>
+      <span class="diagram-foot">MASTER DATA → TAILORED RÉSUMÉS</span>
     </>
   ) : (
     <>
@@ -178,6 +269,7 @@ const barHeights = [
   import '../scripts/integration-flow';
   import '../scripts/data-sort';
   import '../scripts/web-orbit';
+  import '../scripts/resume-tailor';
 </script>
 
 <style>
@@ -306,21 +398,20 @@ const barHeights = [
     margin: auto;
     font-family: var(--sans);
   }
-  .resume-caption,
-  .resume-copy,
-  .resume-name {
+  .resume-copy {
     fill: currentColor;
   }
-  .resume-caption,
-  .resume-copy,
-  .resume-export {
+  .resume-copy {
     font-size: 16px;
   }
-  .resume-name {
-    font-family: var(--serif);
-    font-size: 25px;
+  .resume-source-label {
+    font-size: 13px;
+  }
+  .resume-selection ~ text {
+    fill: currentColor;
   }
   .resume-export {
     fill: #25282a;
+    font-size: 16px;
   }
 </style>
