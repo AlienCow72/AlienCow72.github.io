@@ -531,6 +531,7 @@ h1 {
 .project-art {
   --art-mono: monospace;
   aspect-ratio: 4 / 3;
+  min-height: 340px;
   flex-shrink: 0;
   gap: 10px;
   background: #303234;
