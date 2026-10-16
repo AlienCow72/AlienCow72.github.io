@@ -530,6 +530,10 @@ h1 {
 }
 .project-art {
   --art-mono: monospace;
+  /* Keep Safari from deriving a wider flex item from the minimum height. */
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   aspect-ratio: 4 / 3;
   min-height: 340px;
   flex-shrink: 0;
