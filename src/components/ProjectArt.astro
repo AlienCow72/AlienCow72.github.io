@@ -38,31 +38,37 @@ const { type } = Astro.props;
       <span class="diagram-foot">RECORDS → RELATIONSHIPS → INSIGHT</span>
     </>
   ) : type === 'resume' ? (
-    <svg class="resume-diagram" viewBox="0 0 360 250" fill="none">
-      <rect x="40" y="16" width="200" height="218" fill="#25282a" />
-      <text x="60" y="49" class="resume-caption">
-        Master résumé
-      </text>
-      <text x="60" y="96" class="resume-name">
-        Kyle Anderson
-      </text>
-      <text x="60" y="129" class="resume-copy">
-        Experience
-      </text>
-      <text x="60" y="157" class="resume-copy">
-        Projects
-      </text>
-      <text x="60" y="185" class="resume-copy">
-        Skills
-      </text>
-      <rect x="185" y="147" width="140" height="83" fill="currentColor" />
-      <text x="203" y="180" class="resume-export">
-        Review. Refine.
-      </text>
-      <text x="203" y="207" class="resume-export">
-        Make it yours.
-      </text>
-    </svg>
+    <>
+      <span class="diagram-label">ONE RÉSUMÉ. ROOM TO ADAPT.</span>
+      <div class="diagram-stage">
+        <svg class="resume-diagram" viewBox="0 0 360 250" fill="none">
+          <rect x="40" y="16" width="200" height="218" fill="#25282a" />
+          <text x="60" y="49" class="resume-caption">
+            Master résumé
+          </text>
+          <text x="60" y="96" class="resume-name">
+            Kyle Anderson
+          </text>
+          <text x="60" y="129" class="resume-copy">
+            Experience
+          </text>
+          <text x="60" y="157" class="resume-copy">
+            Projects
+          </text>
+          <text x="60" y="185" class="resume-copy">
+            Skills
+          </text>
+          <rect x="185" y="147" width="140" height="83" fill="currentColor" />
+          <text x="203" y="180" class="resume-export">
+            Review. Refine.
+          </text>
+          <text x="203" y="207" class="resume-export">
+            Make it yours.
+          </text>
+        </svg>
+      </div>
+      <span class="diagram-foot">EDIT → REFINE → EXPORT</span>
+    </>
   ) : (
     <>
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
@@ -167,11 +173,10 @@ const { type } = Astro.props;
     top: 70px;
   }
   .resume-diagram {
-    position: absolute;
-    inset: 24px;
-    width: calc(100% - 48px);
-    height: calc(100% - 48px);
-    max-width: calc(100% - 48px);
+    display: block;
+    width: 100%;
+    height: 180px;
+    max-width: 280px;
     min-width: 0;
     min-height: 0;
     margin: auto;
