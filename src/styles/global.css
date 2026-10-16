@@ -638,10 +638,6 @@ h1 {
   height: var(--bar);
   background: linear-gradient(#a2bba78c, #a2bba709);
   border-top: 2px solid #a2bba7;
-  transition: height 0.4s;
-}
-.project-card:hover .data-diagram span {
-  height: calc(100% - var(--bar) + 15%);
 }
 .art-web {
   background: #34333a;
@@ -723,9 +719,6 @@ h1 {
 }
 .project-card:focus-visible {
   outline-offset: 6px;
-}
-.project-card:focus-visible .data-diagram span {
-  height: calc(100% - var(--bar) + 15%);
 }
 .project-card-body .eyebrow {
   font-size: 1rem;
