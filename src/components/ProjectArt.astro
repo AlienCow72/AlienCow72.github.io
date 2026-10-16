@@ -12,24 +12,28 @@ const { type } = Astro.props;
   {type === 'integration' ? (
     <>
       <span class="diagram-label">CONNECTED BY DESIGN</span>
-      <div class="integration-diagram">
-        <span class="diagram-node">ERP</span>
-        <span class="diagram-line"></span>
-        <span class="diagram-core">
-          <DstaxMark />
-        </span>
-        <span class="diagram-line"></span>
-        <span class="diagram-node">TAX</span>
+      <div class="diagram-stage">
+        <div class="integration-diagram">
+          <span class="diagram-node">ERP</span>
+          <span class="diagram-line"></span>
+          <span class="diagram-core">
+            <DstaxMark />
+          </span>
+          <span class="diagram-line"></span>
+          <span class="diagram-node">TAX</span>
+        </div>
       </div>
       <span class="diagram-foot">ONE PLATFORM. MORE POSSIBILITIES.</span>
     </>
   ) : type === 'data' ? (
     <>
       <span class="diagram-label">FINDING THE BIGGER PICTURE</span>
-      <div class="data-diagram">
-        {Array.from({ length: 28 }, (_, i) => (
-          <span style={`--bar: ${18 + ((i * 37) % 75)}%; --i: ${i}`} />
-        ))}
+      <div class="diagram-stage">
+        <div class="data-diagram">
+          {Array.from({ length: 28 }, (_, i) => (
+            <span style={`--bar: ${18 + ((i * 37) % 75)}%; --i: ${i}`} />
+          ))}
+        </div>
       </div>
       <span class="diagram-foot">RECORDS → RELATIONSHIPS → INSIGHT</span>
     </>
@@ -62,23 +66,25 @@ const { type } = Astro.props;
   ) : (
     <>
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
-      <div class="web-diagram">
-        <span class="tiny-nav">
-          <img
-            class="tiny-brand-mark"
-            src={personalMark.src}
-            width="22"
-            height="22"
-            alt=""
-          />
-          <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
-        </span>
-        <span class="tiny-title">
-          Stay
-          <br />
-          <em>curious.</em>
-        </span>
-        <span class="tiny-orbit"></span>
+      <div class="diagram-stage">
+        <div class="web-diagram">
+          <span class="tiny-nav">
+            <img
+              class="tiny-brand-mark"
+              src={personalMark.src}
+              width="22"
+              height="22"
+              alt=""
+            />
+            <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
+          </span>
+          <span class="tiny-title">
+            Stay
+            <br />
+            <em>curious.</em>
+          </span>
+          <span class="tiny-orbit"></span>
+        </div>
       </div>
       <span class="diagram-foot">BUILT WITH ASTRO. MADE TO EXPLORE.</span>
     </>
@@ -86,6 +92,78 @@ const { type } = Astro.props;
 </div>
 
 <style>
+  /* Reserve independent rows even when the captions wrap at narrow widths. */
+  .project-art:has(.diagram-stage) {
+    display: grid;
+    grid-template-rows: minmax(40px, auto) minmax(180px, 1fr) minmax(
+        40px,
+        auto
+      );
+    justify-items: center;
+    gap: 12px;
+    height: auto;
+    min-height: 320px;
+  }
+  .diagram-label,
+  .diagram-foot {
+    align-self: center;
+    margin: 0;
+  }
+  .diagram-stage {
+    container-type: inline-size;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+  }
+  .diagram-stage .integration-diagram {
+    min-width: 0;
+    width: 90%;
+    transform: rotate(-8deg);
+  }
+  .diagram-stage .diagram-core {
+    --mark-width: clamp(40px, 25cqi, 75px);
+  }
+  .diagram-stage .diagram-node {
+    padding: 10px 6px;
+  }
+  .diagram-stage .diagram-line {
+    flex: 1;
+    min-width: 0;
+    max-width: 28px;
+  }
+  .diagram-stage .data-diagram {
+    min-width: 0;
+    height: 110px;
+    max-width: 360px;
+  }
+  .diagram-stage .data-diagram span {
+    flex: 1;
+    min-width: 0;
+  }
+  .diagram-stage .web-diagram {
+    position: relative;
+    top: auto;
+    width: 90%;
+    max-width: 280px;
+    height: 150px;
+    padding: 12px;
+  }
+  .diagram-stage .tiny-nav > span {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .diagram-stage .tiny-title {
+    top: 60px;
+    font-size: 34px;
+  }
+  .diagram-stage .tiny-orbit {
+    width: 50px;
+    height: 50px;
+    right: 12px;
+    top: 70px;
+  }
   .resume-diagram {
     width: 100%;
     height: 100%;
