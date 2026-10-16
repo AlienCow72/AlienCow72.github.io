@@ -33,6 +33,32 @@ const { type } = Astro.props;
       </div>
       <span class="diagram-foot">RECORDS → RELATIONSHIPS → INSIGHT</span>
     </>
+  ) : type === 'resume' ? (
+    <svg class="resume-diagram" viewBox="0 0 360 250" fill="none">
+      <rect x="40" y="16" width="200" height="218" fill="#25282a" />
+      <text x="60" y="49" class="resume-caption">
+        Master résumé
+      </text>
+      <text x="60" y="96" class="resume-name">
+        Kyle Anderson
+      </text>
+      <text x="60" y="129" class="resume-copy">
+        Experience
+      </text>
+      <text x="60" y="157" class="resume-copy">
+        Projects
+      </text>
+      <text x="60" y="185" class="resume-copy">
+        Skills
+      </text>
+      <rect x="185" y="147" width="140" height="83" fill="currentColor" />
+      <text x="203" y="180" class="resume-export">
+        Review. Refine.
+      </text>
+      <text x="203" y="207" class="resume-export">
+        Make it yours.
+      </text>
+    </svg>
   ) : (
     <>
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
@@ -58,3 +84,30 @@ const { type } = Astro.props;
     </>
   )}
 </div>
+
+<style>
+  .resume-diagram {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: auto;
+    font-family: var(--sans);
+  }
+  .resume-caption,
+  .resume-copy,
+  .resume-name {
+    fill: currentColor;
+  }
+  .resume-caption,
+  .resume-copy,
+  .resume-export {
+    font-size: 16px;
+  }
+  .resume-name {
+    font-family: var(--serif);
+    font-size: 25px;
+  }
+  .resume-export {
+    fill: #25282a;
+  }
+</style>

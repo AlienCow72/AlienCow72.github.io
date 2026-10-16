@@ -90,4 +90,31 @@ export const projects = [
       },
     ],
   },
+  {
+    slug: 'resume-studio',
+    title: 'One résumé. Room to adapt.',
+    name: 'Résumé Studio',
+    category: 'Tools & automation',
+    year: '04',
+    art: 'resume',
+    description:
+      'A local workspace for editing résumés, managing versions, and turning job postings into reviewable application drafts.',
+    tags: ['Python', 'JSON Resume', 'AI-assisted workflows'],
+    intro:
+      'Bringing structured résumé data, document rendering, and application tracking together without losing sight of the source material.',
+    sections: [
+      {
+        title: 'The idea',
+        text: 'Updating a résumé for different opportunities can leave a trail of disconnected documents. I built Résumé Studio around one editable master, with named versions that select relevant information without duplicating the underlying facts.',
+      },
+      {
+        title: 'From data to documents',
+        text: 'A Python application serves a local browser interface for editing JSON Resume data, choosing version content, and previewing the result. Exports include JSON, Markdown, HTML, and PDF. Shared HTML and PDF layouts keep previews and downloads consistent, while revision checks and timestamped backups protect saved work.',
+      },
+      {
+        title: 'A reviewable application workflow',
+        text: 'A job tracker connects posting capture with AI-assisted résumé and cover-letter drafts through the Codex CLI. Each generation run keeps a snapshot of the master résumé and its source posting. Drafts can be reviewed and edited before downloading an application ZIP, and the board tracks progress from applying to interviews. Generated documents stay separate from the master, with human review built into the workflow.',
+      },
+    ],
+  },
 ];
