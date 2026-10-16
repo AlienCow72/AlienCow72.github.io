@@ -6,6 +6,7 @@ interface Props {
   type: string;
 }
 const { type } = Astro.props;
+const flowMaskId = `integration-flow-${crypto.randomUUID()}`;
 ---
 
 <div class:list={['project-art', `art-${type}`]} aria-hidden="true">
@@ -14,6 +15,50 @@ const { type } = Astro.props;
       <span class="diagram-label">CONNECTED BY DESIGN</span>
       <div class="diagram-stage">
         <div class="integration-diagram">
+          <svg class="integration-flow" aria-hidden="true">
+            <defs>
+              <mask id={flowMaskId} maskUnits="userSpaceOnUse">
+                <rect class="flow-area" fill="white" />
+                <rect class="flow-logo-mask" fill="black" />
+              </mask>
+            </defs>
+            <g mask={`url(#${flowMaskId})`}>
+              <circle class="flow-packet" r="3" fill="currentColor">
+                <animateMotion
+                  dur="2.5s"
+                  calcMode="linear"
+                  keyPoints="0;1;1"
+                  keyTimes="0;0.875;1"
+                  repeatCount="indefinite"
+                  begin="indefinite"
+                />
+              </circle>
+            </g>
+            <rect
+              class="flow-completion"
+              rx="5"
+              fill="none"
+              stroke="currentColor"
+              opacity="0"
+            >
+              <animate
+                attributeName="opacity"
+                values="0;0;1;0"
+                keyTimes="0;0.875;0.94;1"
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin="indefinite"
+              />
+              <animate
+                attributeName="stroke-width"
+                values="1;1;4;1"
+                keyTimes="0;0.875;0.94;1"
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin="indefinite"
+              />
+            </rect>
+          </svg>
           <span class="diagram-node">ERP</span>
           <span class="diagram-line"></span>
           <span class="diagram-core">
@@ -97,7 +142,31 @@ const { type } = Astro.props;
   )}
 </div>
 
+<script>
+  import '../scripts/integration-flow';
+</script>
+
 <style>
+  .integration-diagram {
+    position: relative;
+  }
+  .integration-flow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .project-art[data-flow-active] .integration-flow {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .integration-flow {
+      display: none;
+    }
+  }
   /* Reserve independent rows even when the captions wrap at narrow widths. */
   .project-art:has(.diagram-stage) {
     display: grid;
