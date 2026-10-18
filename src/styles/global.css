@@ -4,7 +4,6 @@
   --raised: #323436;
   --text: #eeede7;
   --muted: #c0c1bb;
-  --paper-dot: #ffffff24;
   --header-height: 104px;
   --gold: #e4bc78;
   --line: #ffffff12;
@@ -14,7 +13,8 @@
   font-family: var(--sans);
   font-size: 100%;
   background: var(--bg);
-  background-image: radial-gradient(var(--paper-dot) 0.8px, transparent 0.8px);
+  /* SVG dots stay visible when Safari rasterizes the page at fractional zoom. */
+  background-image: url('/engineering-paper.svg');
   background-size: 24px 24px;
   color: var(--text);
   font-synthesis: none;
@@ -530,7 +530,12 @@ h1 {
 }
 .project-art {
   --art-mono: monospace;
+  /* Keep Safari from deriving a wider flex item from the minimum height. */
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   aspect-ratio: 4 / 3;
+  min-height: 340px;
   flex-shrink: 0;
   gap: 10px;
   background: #303234;
@@ -633,10 +638,6 @@ h1 {
   height: var(--bar);
   background: linear-gradient(#a2bba78c, #a2bba709);
   border-top: 2px solid #a2bba7;
-  transition: height 0.4s;
-}
-.project-card:hover .data-diagram span {
-  height: calc(100% - var(--bar) + 15%);
 }
 .art-web {
   background: #34333a;
@@ -718,9 +719,6 @@ h1 {
 }
 .project-card:focus-visible {
   outline-offset: 6px;
-}
-.project-card:focus-visible .data-diagram span {
-  height: calc(100% - var(--bar) + 15%);
 }
 .project-card-body .eyebrow {
   font-size: 1rem;

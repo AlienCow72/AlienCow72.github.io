@@ -1,60 +1,417 @@
 ---
 import DstaxMark from './DstaxMark.astro';
+import BrandMark from './BrandMark.astro';
 import personalMark from '../assets/brand/personal-mark-yellow.svg';
 
 interface Props {
   type: string;
 }
 const { type } = Astro.props;
+const flowMaskId = `integration-flow-${crypto.randomUUID()}`;
+const barHeights = [
+  76, 24, 91, 43, 18, 65, 34, 84, 52, 12, 71, 39, 96, 28, 58, 21, 81, 47, 68,
+  15, 88, 36, 62, 31, 73, 55, 94, 45,
+];
 ---
 
 <div class:list={['project-art', `art-${type}`]} aria-hidden="true">
   {type === 'integration' ? (
     <>
       <span class="diagram-label">CONNECTED BY DESIGN</span>
-      <div class="integration-diagram">
-        <span class="diagram-node">ERP</span>
-        <span class="diagram-line"></span>
-        <span class="diagram-core">
-          <DstaxMark />
-        </span>
-        <span class="diagram-line"></span>
-        <span class="diagram-node">TAX</span>
+      <div class="diagram-stage">
+        <div class="integration-diagram">
+          <svg class="integration-flow" aria-hidden="true">
+            <defs>
+              <mask id={flowMaskId} maskUnits="userSpaceOnUse">
+                <rect class="flow-area" fill="white" />
+                <rect class="flow-logo-mask" fill="black" />
+              </mask>
+            </defs>
+            <g mask={`url(#${flowMaskId})`}>
+              <circle class="flow-packet" r="3" fill="currentColor">
+                <animateMotion
+                  dur="2.5s"
+                  calcMode="linear"
+                  keyPoints="0;1;1"
+                  keyTimes="0;0.875;1"
+                  repeatCount="indefinite"
+                  begin="indefinite"
+                />
+              </circle>
+            </g>
+            <rect
+              class="flow-completion"
+              rx="5"
+              fill="none"
+              stroke="currentColor"
+              opacity="0"
+            >
+              <animate
+                attributeName="opacity"
+                values="0;0;1;0"
+                keyTimes="0;0.875;0.94;1"
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin="indefinite"
+              />
+              <animate
+                attributeName="stroke-width"
+                values="1;1;4;1"
+                keyTimes="0;0.875;0.94;1"
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin="indefinite"
+              />
+            </rect>
+          </svg>
+          <span class="diagram-node">ERP</span>
+          <span class="diagram-line"></span>
+          <span class="diagram-core">
+            <DstaxMark />
+          </span>
+          <span class="diagram-line"></span>
+          <span class="diagram-node">TAX</span>
+        </div>
       </div>
       <span class="diagram-foot">ONE PLATFORM. MORE POSSIBILITIES.</span>
     </>
   ) : type === 'data' ? (
     <>
       <span class="diagram-label">FINDING THE BIGGER PICTURE</span>
-      <div class="data-diagram">
-        {Array.from({ length: 28 }, (_, i) => (
-          <span style={`--bar: ${18 + ((i * 37) % 75)}%; --i: ${i}`} />
-        ))}
+      <div class="diagram-stage">
+        <div class="data-diagram">
+          {barHeights.map((height) => (
+            <span data-height={height} style={`--bar: ${height}%;`} />
+          ))}
+        </div>
       </div>
       <span class="diagram-foot">RECORDS → RELATIONSHIPS → INSIGHT</span>
+    </>
+  ) : type === 'resume' ? (
+    <>
+      <span class="diagram-label">THE RIGHT DETAILS. THE RIGHT ROLE.</span>
+      <div class="diagram-stage">
+        <svg class="resume-diagram" viewBox="0 0 360 250" fill="none">
+          <g class="resume-source" transform="translate(58.5 -5)">
+            <rect x="8" y="30" width="132" height="190" rx="4" fill="#25282a" />
+            <text x="20" y="57" class="resume-copy">
+              Master data
+            </text>
+            {['Experience', 'Projects', 'Skills'].map((label, i) => (
+              <g>
+                <rect
+                  class="resume-selection"
+                  x="17"
+                  y={73 + i * 46}
+                  width="114"
+                  height="35"
+                  rx="3"
+                  fill="currentColor"
+                  opacity="0"
+                />
+                <text x="23" y={89 + i * 46} class="resume-source-label">
+                  {label}
+                </text>
+                <path
+                  d={`M23 ${99 + i * 46}h${i === 1 ? 62 : 88}`}
+                  stroke="currentColor"
+                  stroke-width="2"
+                  opacity="0.4"
+                />
+              </g>
+            ))}
+            <text
+              x="23"
+              y="211"
+              class="resume-source-label"
+              fill="currentColor"
+              opacity="0.45"
+            >
+              Other experience
+            </text>
+            <g class="resume-note" transform="translate(-90 0)">
+              <rect
+                x="185"
+                y="147"
+                width="140"
+                height="83"
+                fill="currentColor"
+              />
+              <text x="203" y="180" class="resume-export">
+                Review. Refine.
+              </text>
+              <text x="203" y="207" class="resume-export">
+                Make it yours.
+              </text>
+            </g>
+          </g>
+          <g class="resume-branch" opacity="0">
+            <path
+              d="M149 126h16 M165 64v122 M165 64h15m-6-6 6 6-6 6 M165 186h15m-6-6 6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+          </g>
+          {['Résumé - ABC', 'Résumé - XYZ'].map((label, version) => (
+            <g class="resume-output" opacity="0">
+              <rect
+                x="181"
+                y={12 + version * 120}
+                width="171"
+                height="106"
+                rx="3"
+                fill="#25282a"
+              />
+              <text x="191" y={34 + version * 120} class="resume-copy">
+                {label}
+              </text>
+              {['Experience', 'Projects', 'Skills'].map((section, i) => (
+                <g class="resume-result-section" opacity="0">
+                  <text
+                    x="191"
+                    y={54 + i * 22 + version * 120}
+                    fill="currentColor"
+                    class="resume-source-label"
+                  >
+                    {section}
+                  </text>
+                  <path
+                    class="resume-result-lines"
+                    d={`M191 ${61 + i * 22 + version * 120}h${(version === 0 ? [140, 100, 124] : [108, 142, 92])[i]}`}
+                    stroke="currentColor"
+                    opacity="0.6"
+                    stroke-width="2"
+                    pathLength="1"
+                    stroke-dasharray="1"
+                    stroke-dashoffset="1"
+                  />
+                </g>
+              ))}
+              <path
+                class="resume-ready"
+                d={`m331 ${30 + version * 120} 4 4 8-10`}
+                stroke="#a2bba7"
+                stroke-width="2"
+                opacity="0"
+              />
+            </g>
+          ))}
+          {Array.from({ length: 6 }, () => (
+            <rect
+              class="resume-data-packet"
+              width="14"
+              height="4"
+              rx="2"
+              fill="currentColor"
+              opacity="0"
+            />
+          ))}
+        </svg>
+      </div>
+      <span class="diagram-foot">MASTER DATA → TAILORED RÉSUMÉS</span>
     </>
   ) : (
     <>
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
-      <div class="web-diagram">
-        <span class="tiny-nav">
-          <img
-            class="tiny-brand-mark"
-            src={personalMark.src}
-            width="22"
-            height="22"
-            alt=""
-          />
-          <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
-        </span>
-        <span class="tiny-title">
-          Stay
-          <br />
-          <em>curious.</em>
-        </span>
-        <span class="tiny-orbit"></span>
+      <div class="diagram-stage">
+        <div class="web-diagram">
+          <span class="tiny-nav">
+            <img
+              class="tiny-brand-mark"
+              src={personalMark.src}
+              width="22"
+              height="22"
+              alt=""
+            />
+            <span>ABOUT &nbsp; WORK &nbsp; WRITING</span>
+          </span>
+          <span class="tiny-title">
+            Stay
+            <br />
+            <em>curious.</em>
+          </span>
+          <span class="tiny-orbit">
+            <svg class="orbit-art" viewBox="0 0 100 100" fill="none">
+              <g class="orbit-rest" stroke="currentColor">
+                <ellipse cx="50" cy="50" rx="44" ry="20" />
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx="44"
+                  ry="20"
+                  transform="rotate(60 50 50)"
+                />
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx="44"
+                  ry="20"
+                  transform="rotate(120 50 50)"
+                />
+                <circle cx="94" cy="50" r="3" fill="currentColor" />
+                <circle cx="28" cy="12" r="3" fill="currentColor" />
+                <circle cx="28" cy="88" r="3" fill="currentColor" />
+              </g>
+              <g class="orbit-morph" stroke="currentColor" />
+              <g class="orbit-brand">
+                <BrandMark size={100} />
+              </g>
+            </svg>
+          </span>
+        </div>
       </div>
       <span class="diagram-foot">BUILT WITH ASTRO. MADE TO EXPLORE.</span>
     </>
   )}
 </div>
+
+<script>
+  import '../scripts/integration-flow';
+  import '../scripts/data-sort';
+  import '../scripts/web-orbit';
+  import '../scripts/resume-tailor';
+</script>
+
+<style>
+  .diagram-stage .tiny-orbit {
+    border: 0;
+    color: var(--orbit-color, #c0b7d3);
+  }
+  .tiny-orbit::before,
+  .tiny-orbit::after {
+    display: none;
+  }
+  .orbit-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .orbit-morph,
+  .orbit-brand {
+    opacity: 0;
+  }
+  .tiny-orbit[data-orbit-state] .orbit-rest {
+    opacity: 0;
+  }
+  .integration-diagram {
+    position: relative;
+  }
+  .integration-flow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .project-art[data-flow-active] .integration-flow {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .integration-flow {
+      display: none;
+    }
+  }
+  /* Reserve independent rows even when the captions wrap at narrow widths. */
+  .project-art:has(.diagram-stage) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(40px, auto) minmax(180px, 1fr) minmax(
+        40px,
+        auto
+      );
+    justify-items: center;
+    gap: 12px;
+  }
+  .diagram-label,
+  .diagram-foot {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    align-self: center;
+    margin: 0;
+  }
+  .diagram-stage {
+    container-type: inline-size;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+  }
+  .diagram-stage .integration-diagram {
+    min-width: 0;
+    width: 90%;
+    transform: rotate(-8deg);
+  }
+  .diagram-stage .diagram-core {
+    --mark-width: clamp(40px, 25cqi, 75px);
+  }
+  .diagram-stage .diagram-node {
+    padding: 10px 6px;
+  }
+  .diagram-stage .diagram-line {
+    flex: 1;
+    min-width: 0;
+    max-width: 28px;
+  }
+  .diagram-stage .data-diagram {
+    min-width: 0;
+    height: 110px;
+    max-width: 360px;
+  }
+  .diagram-stage .data-diagram span {
+    flex: 1;
+    min-width: 0;
+  }
+  .diagram-stage .web-diagram {
+    position: relative;
+    top: auto;
+    width: 90%;
+    max-width: 280px;
+    height: 150px;
+    padding: 12px;
+  }
+  .diagram-stage .tiny-nav > span {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .diagram-stage .tiny-title {
+    top: 60px;
+    font-size: 34px;
+  }
+  .diagram-stage .tiny-orbit {
+    width: 50px;
+    height: 50px;
+    right: 12px;
+    top: 70px;
+  }
+  .resume-diagram {
+    display: block;
+    width: 100%;
+    height: 180px;
+    max-width: 280px;
+    min-width: 0;
+    min-height: 0;
+    margin: auto;
+    font-family: var(--sans);
+  }
+  .resume-copy {
+    fill: currentColor;
+  }
+  .resume-copy {
+    font-size: 16px;
+  }
+  .resume-source-label {
+    font-size: 13px;
+  }
+  .resume-selection ~ text {
+    fill: currentColor;
+  }
+  .resume-export {
+    fill: #25282a;
+    font-size: 16px;
+  }
+</style>
