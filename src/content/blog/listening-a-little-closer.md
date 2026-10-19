@@ -12,6 +12,7 @@ playlistLimit: 20
 ---
 
 # Vibes of 2026
+
 I've listening to more house music this year. It's been fun having a completely new genre to find new artists that I have previously overlooked or never even heard of.
 
 My favorite find so far is "Truth" by Friend Within.
