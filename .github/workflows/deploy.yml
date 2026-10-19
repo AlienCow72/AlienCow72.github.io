@@ -6,6 +6,10 @@ on:
 
   workflow_dispatch:
 
+  # Refresh playlist contents in the static site, even without a source change.
+  schedule:
+    - cron: '23 11 * * *'
+
 permissions:
   contents: read
   pages: write
@@ -35,10 +39,14 @@ jobs:
         run: npm ci
 
       - name: Validate source
-        run: npm run lint && npm run prettier
+        run: npm run lint && npm run prettier && npm run test:music
 
       - name: Build Astro
         run: npm run build
+        env:
+          APPLE_MUSIC_DEVELOPER_TOKEN: ${{ secrets.APPLE_MUSIC_DEVELOPER_TOKEN }}
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

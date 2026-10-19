@@ -12,7 +12,8 @@
     "preview": "astro preview --host 0.0.0.0",
     "lint": "eslint . --max-warnings 0",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "test:music": "node --test tests/music-playlist.test.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

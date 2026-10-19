@@ -1,0 +1,100 @@
+---
+import AppleMusic from '../assets/music-providers/applemusic.svg';
+import Spotify from '../assets/music-providers/spotify.svg';
+import YouTube from '../assets/music-providers/youtube.svg';
+import SoundCloud from '../assets/music-providers/soundcloud.svg';
+import { serviceSearches, type MusicTrack } from '../lib/music-playlist';
+interface Props {
+  track: MusicTrack;
+}
+const { track } = Astro.props;
+const searches = serviceSearches(track);
+const providers = [
+  {
+    name: 'Apple Music',
+    href: track.appleMusic,
+    icon: AppleMusic,
+    search: false,
+  },
+  {
+    name: 'Spotify',
+    href: track.spotify ?? searches.spotify,
+    icon: Spotify,
+    search: !track.spotify,
+  },
+  { name: 'YouTube', href: searches.youtube, icon: YouTube, search: true },
+  {
+    name: 'SoundCloud',
+    href: searches.soundcloud,
+    icon: SoundCloud,
+    search: true,
+  },
+];
+// Provider marks: Simple Icons (CC0), https://github.com/simple-icons/simple-icons.
+---
+
+<ul
+  class="track-links"
+  aria-label={`Music services for ${track.title} by ${track.artist}`}
+>
+  {providers.map(({ name, href, icon: ProviderIcon, search }) => {
+    const label = search
+      ? `Search ${name} for ${track.title} by ${track.artist}`
+      : `Listen to ${track.title} by ${track.artist} on ${name}`;
+    return (
+      <li>
+        <a
+          href={href}
+          aria-label={label}
+          title={search ? `Search ${name}` : `Listen on ${name}`}
+          data-provider={name}
+        >
+          <ProviderIcon width={22} height={22} />
+        </a>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .track-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 44px);
+    align-items: center;
+  }
+  .track-links li {
+    margin: 0;
+  }
+  .track-links a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    color: var(--muted);
+    border-radius: 4px;
+  }
+  .track-links a:hover,
+  .track-links a:focus-visible {
+    color: var(--gold);
+    background: var(--surface);
+  }
+  .track-links a:focus-visible {
+    outline-offset: 0;
+  }
+  @media (max-width: 640px) {
+    :global(.playlist-list) .track-links {
+      grid-template-columns: repeat(2, 44px);
+    }
+  }
+  @media (max-width: 480px) {
+    :global(.playlist-grid) .track-links {
+      grid-template-columns: repeat(4, 32px);
+    }
+    :global(.playlist-grid) .track-links a {
+      width: 32px;
+    }
+  }
+</style>

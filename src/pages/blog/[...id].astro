@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
+import MusicPlaylist from '../../components/MusicPlaylist.astro';
 export const getStaticPaths = (async () => {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
@@ -44,5 +45,13 @@ const { Content } = await render(post);
     <div class="prose">
       <Content />
     </div>
+    {post.data.playlist && (
+      <MusicPlaylist
+        url={post.data.playlist}
+        order={post.data.playlistOrder}
+        layout={post.data.playlistLayout}
+        limit={post.data.playlistLimit}
+      />
+    )}
   </article>
 </Layout>
