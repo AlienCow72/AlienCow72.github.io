@@ -58,6 +58,39 @@ Supported topics are `Coding`, `Music`, and `AI`. Extend the enum in `src/conten
 
 Search and topic filtering work together in the browser. With JavaScript disabled, all published article links remain available.
 
+### Playlists in music posts
+
+Add the public Apple Music playlist URL to a post’s frontmatter:
+
+```yaml
+category: Music
+playlist: https://music.apple.com/us/playlist/vibes-2026/pl.u-NJG4Fmx6YPL
+playlistOrder: newest-last
+playlistLayout: grid
+playlistLimit: 10
+```
+
+The latest songs appear below the article, newest first.
+
+`playlistLimit` sets the number of songs in either layout (an integer from 1 to 100; defaults to 10). `playlistLayout: grid` shows square artwork with three rows underneath: title, artist, and provider icons. `playlistLayout: list` (the default) shows compact rows with the provider icons on the right; on narrow screens they form a two-by-two block beside the title and artist. For example, use `playlistLayout: list` and `playlistLimit: 6` for a six-song list.
+
+`playlistOrder: newest-last` matches playlists where new songs are appended at the bottom. Use `newest-first` if you maintain new additions at the top. **Apple’s public playlist data does not provide a date added for each song.** Reordering the playlist changes what is shown; this uses saved playlist order, not release dates or historical addition timestamps. If the playlist contains fewer songs than the requested limit, the full list is shown. The existing sample music article demonstrates Vibes 2026 and retains its sample label.
+
+The list is generated at build time, works without JavaScript, and requires no visitor login. The deployment workflow rebuilds daily at 11:23 UTC (GitHub schedules can be delayed), on pushes to main, and via **Run workflow**. Local development refreshes on restarting the dev server. No background requests are sent by visitors. If Apple fails or returns incomplete data, the article still builds with a message and the full playlist link; a subsequent successful build restores the songs.
+
+#### Official API credentials
+
+Copy `.env.example` to `.env` for local development. In GitHub, add repository **Actions secrets** with the same names:
+
+- `APPLE_MUSIC_DEVELOPER_TOKEN`: a signed Apple Music developer JWT. Follow [Apple’s developer token instructions](https://developer.apple.com/documentation/applemusicapi/generating-developer-tokens). Renew it before expiration. When set, builds use the [Apple Music catalog playlist API](https://developer.apple.com/documentation/applemusicapi/get-a-catalog-playlist) and follow all track pages before selecting the requested songs. Without it, builds parse the public playlist webpage and verify its track count; that fallback may need maintenance if Apple changes its page format.
+- `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET`: credentials for a Spotify app. Builds obtain a token through [client credentials authorization](https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow) and use [catalog search](https://developer.spotify.com/documentation/web-api/reference/search). A direct link is included only when title, primary artist, and duration match. Spotify app access restrictions or rate limits may prevent matching.
+
+Credentials stay on the build machine; do not prefix them with `PUBLIC_`. No Songlink dependency is used. Apple Music always links directly to the song. Without credentials, on API errors, or when no confident match exists, the Spotify icon opens a search and has a **Search Spotify** tooltip and accessible label. YouTube and SoundCloud icons have search tooltips and accessible labels; these do not claim an exact recording match.
+
+Provider icons are bundled SVGs from [Simple Icons](https://github.com/simple-icons/simple-icons) (CC0); no external icon requests are needed. Spotify searches use its path-based web search URL.
+
+Run `npm run test:music` for configurable track selection, the recorded public playlist fixture, API pagination, URL validation, Spotify matching, and failure behavior. These tests mock authenticated API responses; real authenticated integration requires the credentials above.
+
 ### Motion and accessibility
 
 The hero has Code, Music, and AI modes plus a pause/play button. Pointer movement rotates the sculpture. Reduced motion starts it paused; visitors can explicitly opt into motion. Rendering stops when the canvas is offscreen or the tab is hidden. Navigation and controls are keyboard accessible, and the layout adapts to narrow screens. Fonts are bundled locally.

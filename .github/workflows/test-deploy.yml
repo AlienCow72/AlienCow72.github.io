@@ -26,5 +26,8 @@ jobs:
       - name: Run prettier
         run: npm run prettier
 
+      - name: Test music playlists
+        run: npm run test:music
+
       - name: Build
         run: npm run build

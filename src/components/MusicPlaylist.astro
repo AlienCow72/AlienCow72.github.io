@@ -1,0 +1,248 @@
+---
+import {
+  loadMusicPlaylist,
+  type MusicPlaylist,
+  type PlaylistOrder,
+  type PlaylistLayout,
+} from '../lib/music-playlist';
+import MusicProviderLinks from './MusicProviderLinks.astro';
+interface Props {
+  url: string;
+  order: PlaylistOrder;
+  layout?: PlaylistLayout;
+  limit?: number;
+}
+const { url, order, layout = 'list', limit = 10 } = Astro.props;
+let playlist: MusicPlaylist | undefined;
+try {
+  playlist = await loadMusicPlaylist(url, order, limit);
+} catch (error) {
+  console.warn(
+    '[music] Playlist unavailable:',
+    error instanceof Error ? error.message : 'Unknown error',
+  );
+}
+---
+
+<section
+  class:list={['music-playlist', `playlist-${layout}`]}
+  aria-label="Playlist songs"
+>
+  <header class="playlist-header">
+    <div>
+      <p class="eyebrow">ON REPEAT</p>
+      <h2>{playlist?.title ?? 'Listen along'}</h2>
+    </div>
+    <a class="text-link" href={url}>
+      Full playlist <span aria-hidden="true">↗</span>
+    </a>
+  </header>
+  {playlist ? (
+    <>
+      <p class="playlist-description">
+        The latest {playlist.tracks.length} additions, newest first.
+      </p>
+      <ol class="playlist-tracks">
+        {playlist.tracks.map((track, index) => {
+          return (
+            <li>
+              <span class="track-number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              {track.artwork ? (
+                <img
+                  src={track.artwork}
+                  alt=""
+                  width="480"
+                  height="480"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="track-art-fallback" aria-hidden="true">
+                  ♪
+                </span>
+              )}
+              <div class="track-details">
+                <a
+                  class="track-title"
+                  href={track.appleMusic}
+                  title={track.title}
+                >
+                  {track.title}
+                </a>
+                <p class="track-artist" title={track.artist}>
+                  {track.artist}
+                </p>
+              </div>
+              <MusicProviderLinks track={track} />
+            </li>
+          );
+        })}
+      </ol>
+      {playlist.total === 0 && (
+        <p class="playlist-description">No songs in this playlist yet.</p>
+      )}
+      <p class="playlist-note">
+        Updated{' '}
+        <time datetime={playlist.fetchedAt}>
+          {new Date(playlist.fetchedAt).toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'UTC',
+          })}
+        </time>
+        . Search links help you find the song on other services.
+      </p>
+    </>
+  ) : (
+    <p class="playlist-description">
+      The song list is temporarily unavailable. You can still open the full
+      playlist on Apple Music.
+    </p>
+  )}
+</section>
+
+<style>
+  .music-playlist {
+    margin: 0 0 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .playlist-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .playlist-header h2 {
+    margin-top: 8px;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    line-height: 1.1;
+  }
+  .playlist-header > a {
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+  .playlist-description {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  .playlist-tracks {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+  .playlist-list .playlist-tracks > li {
+    display: grid;
+    grid-template-columns: 24px 60px minmax(0, 1fr) 176px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .track-number {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .playlist-tracks img,
+  .track-art-fallback {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+  .track-art-fallback {
+    display: grid;
+    place-items: center;
+    background: var(--surface);
+    color: var(--gold);
+  }
+  .track-details {
+    min-width: 0;
+  }
+  .track-title {
+    display: block;
+    font-size: 1.0625rem;
+    font-weight: 550;
+    line-height: 1.5;
+  }
+  .track-title:hover {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+  .track-artist {
+    margin-top: 3px;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .playlist-grid .playlist-tracks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+  .playlist-grid .playlist-tracks > li {
+    display: grid;
+    grid-template-rows: auto auto 44px;
+    align-content: start;
+    min-width: 0;
+  }
+  .playlist-grid .track-number {
+    display: none;
+  }
+  .playlist-grid .playlist-tracks img,
+  .playlist-grid .track-art-fallback {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .playlist-grid .track-details {
+    margin-top: 12px;
+  }
+  .playlist-grid .track-title,
+  .playlist-grid .track-artist {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .playlist-note {
+    margin-top: 24px;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  @media (max-width: 640px) {
+    .playlist-list .playlist-tracks > li {
+      grid-template-columns: 48px minmax(0, 1fr) 88px;
+      gap: 12px;
+    }
+    .playlist-list .track-number {
+      display: none;
+    }
+    .playlist-list .playlist-tracks img,
+    .playlist-list .track-art-fallback {
+      width: 48px;
+      height: 48px;
+    }
+    .playlist-grid .playlist-tracks {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 16px;
+    }
+  }
+  @media (max-width: 480px) {
+    .playlist-header {
+      align-items: start;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .playlist-grid .track-title {
+      font-size: 1rem;
+    }
+    .playlist-grid .track-artist {
+      font-size: 0.8125rem;
+    }
+  }
+</style>
