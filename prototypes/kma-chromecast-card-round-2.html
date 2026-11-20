@@ -1,0 +1,644 @@
+<!doctype html>
+<!-- Prototype only. Three treatments of the project artwork at project-card scale. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KMA-Chromecast card mockups, round two</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --panel: #242628;
+        --text: #eeede7;
+        --muted-ink: #c0c1bb;
+        --gold: #e4bc78;
+        --sage: #a2bba7;
+        --lilac: #c0b7d3;
+        --line: #ffffff1e;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--foreground, var(--text));
+        font:
+          1rem/1.45 system-ui,
+          sans-serif;
+      }
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 1160px;
+        margin-inline: auto;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+      }
+      .art {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        container-type: inline-size;
+        aspect-ratio: 4 / 3;
+        min-height: 166px;
+      }
+      .handoff-art {
+        background: #303935;
+        color: var(--sage);
+      }
+      .week-art {
+        background: #35323b;
+        color: var(--lilac);
+      }
+      .roundtrip-art {
+        background: #39352f;
+        color: var(--gold);
+      }
+      .copy {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+      }
+      h2 {
+        margin: 0;
+        color: var(--text);
+        font:
+          400 clamp(1.24rem, 2.75vw, 1.7rem)/1.1 Georgia,
+          serif;
+      }
+      p {
+        margin: 9px 0 14px;
+        color: var(--muted-ink);
+        font-size: 0.92rem;
+      }
+      button {
+        margin-top: auto;
+        min-height: 42px;
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #323436;
+        color: var(--gold);
+        font: inherit;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #413a30;
+      }
+      button:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+      .device-title {
+        font-size: clamp(0.62rem, 3.8cqi, 0.85rem);
+        letter-spacing: 0.01em;
+      }
+      .micro {
+        font-size: clamp(0.59rem, 3.3cqi, 0.79rem);
+        line-height: 1.35;
+      }
+      .monitor {
+        border: 1px solid #a2bba76b;
+        border-radius: 5px;
+        background: #272c2a;
+      }
+      .handoff {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 0.66fr 1.52fr;
+        align-items: center;
+        gap: 8%;
+        width: 91%;
+        max-width: 335px;
+        transform: rotate(-7deg);
+      }
+      .handoff::before {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        inset: 48% 3% auto;
+        border-top: 1px solid #a2bba77f;
+      }
+      .node {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .node .device-title {
+        display: block;
+        margin-top: 7px;
+      }
+      .mac-screen {
+        display: grid;
+        gap: 5px;
+        padding: 18% 13%;
+      }
+      .mac-screen i {
+        height: 2px;
+        background: currentColor;
+        opacity: 0.5;
+      }
+      .mac-screen i:nth-child(2) {
+        width: 70%;
+      }
+      .mac-base {
+        height: 3px;
+        width: 108%;
+        margin: 0 -4%;
+        border-radius: 0 0 5px 5px;
+        background: #a2bba784;
+      }
+      .hub-stack {
+        padding: 19% 12%;
+        display: grid;
+        gap: 4px;
+      }
+      .hub-stack i {
+        height: 6px;
+        border: 1px solid #a2bba776;
+        border-radius: 2px;
+        position: relative;
+      }
+      .hub-stack i::after {
+        content: '';
+        position: absolute;
+        inset: 2px 2px auto auto;
+        width: 2px;
+        height: 2px;
+        background: currentColor;
+      }
+      .handoff-screen {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        padding: 9%;
+        aspect-ratio: 1.48;
+        text-align: left;
+        color: var(--gold);
+      }
+      .handoff-screen b {
+        grid-column: 1 / -1;
+        font:
+          400 clamp(0.86rem, 6.5cqi, 1.52rem)/1 Georgia,
+          serif;
+      }
+      .widget {
+        display: grid;
+        align-content: center;
+        padding: 2px 4px;
+        border-radius: 2px;
+        background: #ffffff0d;
+        min-width: 0;
+        white-space: nowrap;
+      }
+      .synced {
+        color: var(--sage);
+        justify-items: center;
+      }
+      .pulse {
+        position: absolute;
+        inset: calc(48% - 2px) auto auto 24%;
+        z-index: 2;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0;
+        --distance: 20cqi;
+      }
+      .pulse.second {
+        left: 51%;
+      }
+      [data-playing] .pulse {
+        animation: travel 0.55s 0.12s ease-out both;
+      }
+      [data-playing] .pulse.second {
+        animation-delay: 0.77s;
+      }
+      [data-playing] .handoff-screen b {
+        animation: receive 0.55s 1.21s ease-out both;
+        transform-origin: left center;
+      }
+      @keyframes travel {
+        12%,
+        75% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(var(--distance));
+        }
+      }
+      @keyframes receive {
+        45% {
+          transform: scale(1.11);
+        }
+      }
+      .week-screen {
+        position: relative;
+        width: min(85%, 305px);
+        padding: 6%;
+        border: 1px solid #c0b7d37d;
+        border-radius: 5px;
+        background: #29282f;
+        transform: rotate(-6deg);
+      }
+      .week-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 5px;
+        margin-bottom: 8px;
+        white-space: nowrap;
+      }
+      .week-head strong {
+        color: var(--gold);
+        font:
+          400 clamp(1rem, 8cqi, 1.85rem)/1 Georgia,
+          serif;
+      }
+      .week-head span {
+        color: var(--lilac);
+      }
+      .rail {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        position: relative;
+        margin-bottom: 8px;
+        padding-block: 3px;
+        background: #ffffff09;
+        border-radius: 2px;
+      }
+      .rail span {
+        z-index: 1;
+        text-align: center;
+      }
+      .rail i {
+        position: absolute;
+        inset: 1px auto 1px calc(100% * 3 / 7);
+        width: calc(100% / 7);
+        border: 1px solid var(--gold);
+        border-radius: 3px;
+      }
+      .week-panels {
+        display: grid;
+        grid-template-columns: 1.65fr 1fr;
+        gap: 5px;
+      }
+      .agenda,
+      .weather {
+        display: grid;
+        align-content: center;
+        gap: 3px;
+        padding: 5px;
+        border-radius: 3px;
+        background: #ffffff0d;
+      }
+      .agenda {
+        position: relative;
+        border-left: 2px solid var(--gold);
+      }
+      .agenda .label {
+        color: var(--gold);
+        white-space: nowrap;
+      }
+      .agenda strong {
+        color: var(--text);
+        white-space: nowrap;
+      }
+      .peek {
+        grid-area: 2 / 1;
+      }
+      .peek.preload {
+        opacity: 0;
+      }
+      .weather {
+        gap: 0;
+        padding-inline: 5px;
+        color: var(--sage);
+      }
+      .weather strong {
+        font:
+          400 clamp(1rem, 7.5cqi, 1.65rem)/1 Georgia,
+          serif;
+      }
+      [data-playing] .rail i {
+        animation: select-day 2.55s ease-in-out both;
+      }
+      [data-playing] .peek.default {
+        animation: leave 2.55s ease-in-out both;
+      }
+      [data-playing] .peek.preload {
+        animation: arrive 2.55s ease-in-out both;
+      }
+      @keyframes select-day {
+        12%,
+        85% {
+          transform: translateX(0);
+        }
+        33%,
+        67% {
+          transform: translateX(100%);
+        }
+      }
+      @keyframes leave {
+        18%,
+        82% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        34%,
+        65% {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+      }
+      @keyframes arrive {
+        18%,
+        82% {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        34%,
+        65% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .loop {
+        position: relative;
+        width: min(86%, 303px);
+        display: grid;
+        gap: 17px;
+        color: var(--gold);
+        transform: rotate(-6deg);
+      }
+      .request {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 4px 6px;
+        padding: 9%;
+        border: 1px solid #e4bc787d;
+        border-radius: 5px;
+        background: #2e2a25;
+      }
+      .request span:first-child {
+        grid-column: 1 / -1;
+        color: var(--gold);
+      }
+      .request strong {
+        color: var(--text);
+        white-space: nowrap;
+      }
+      .completion {
+        grid-area: 2 / 2;
+        justify-self: end;
+        color: var(--sage);
+        white-space: nowrap;
+      }
+      .completion.waiting {
+        color: var(--muted-ink);
+      }
+      .completion.done {
+        opacity: 0;
+      }
+      .receipt-channel {
+        position: absolute;
+        inset: auto 14% 17% auto;
+        width: 72%;
+        height: 34%;
+        border: 1px solid #e4bc7884;
+        border-top: 0;
+        border-radius: 0 0 7px 7px;
+        pointer-events: none;
+      }
+      .nodes {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+      }
+      .nodes span {
+        background: #33302a;
+        border: 1px solid #e4bc7861;
+        border-radius: 3px;
+        padding: 4px 5px;
+        white-space: nowrap;
+      }
+      .nodes span:nth-child(2) {
+        color: var(--sage);
+        border-color: #a2bba768;
+      }
+      .receipt-dot {
+        position: absolute;
+        inset: 52% 14% auto auto;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0;
+        --span: min(61cqi, 218px);
+        --depth: min(15cqi, 36px);
+      }
+      [data-playing] .receipt-dot {
+        animation: receipt-flight 1.6s ease-in-out both;
+      }
+      [data-playing] .completion.waiting {
+        animation: waiting 2.55s ease-in-out both;
+      }
+      [data-playing] .completion.done {
+        animation: done 2.55s ease-in-out both;
+      }
+      @keyframes receipt-flight {
+        5% {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+        24% {
+          transform: translate(0, var(--depth));
+        }
+        53% {
+          transform: translate(calc(-1 * var(--span)), var(--depth));
+        }
+        72% {
+          transform: translate(calc(-1 * var(--span)), var(--depth));
+        }
+        92% {
+          opacity: 1;
+          transform: translate(0, var(--depth));
+        }
+        100% {
+          opacity: 0;
+          transform: translate(0, 0);
+        }
+      }
+      @keyframes waiting {
+        59%,
+        96% {
+          opacity: 0;
+        }
+        52%,
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes done {
+        52%,
+        100% {
+          opacity: 0;
+        }
+        59%,
+        96% {
+          opacity: 1;
+        }
+      }
+      @media (max-width: 620px) {
+        .comparison {
+          grid-template-columns: 1fr;
+          max-width: 420px;
+        }
+        .art {
+          aspect-ratio: 5 / 3;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [data-playing] * {
+          animation: none !important;
+        }
+        [data-playing] .art {
+          outline: 2px solid currentColor;
+          outline-offset: -2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main
+      class="comparison"
+      aria-label="Three new KMA-Chromecast artwork mockups"
+    >
+      <article class="card">
+        <div class="art handoff-art" aria-hidden="true">
+          <div class="handoff">
+            <div class="node">
+              <div class="monitor mac-screen"><i></i><i></i><i></i></div>
+              <div class="mac-base"></div>
+              <span class="device-title">Mac</span>
+            </div>
+            <div class="node">
+              <div class="monitor hub-stack"><i></i><i></i><i></i></div>
+              <span class="device-title">Hub</span>
+            </div>
+            <div class="node">
+              <div class="monitor handoff-screen micro">
+                <b>Week</b>
+                <span class="widget">Agenda</span>
+                <span class="widget synced">✓</span>
+              </div>
+              <span class="device-title">TV</span>
+            </div>
+            <i class="pulse"></i><i class="pulse second"></i>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>The handoff</h2>
+          <p>
+            A snapshot leaves the Mac, passes through the hub, and lands on the
+            TV’s Week Canvas.
+          </p>
+          <button type="button" aria-label="Play The handoff animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="art week-art" aria-hidden="true">
+          <div class="week-screen">
+            <div class="week-head">
+              <strong>Week Canvas</strong><span class="micro">7:24</span>
+            </div>
+            <div class="rail micro">
+              <span>M</span><span>T</span><span>W</span><span>T</span
+              ><span>F</span><span>S</span><span>S</span><i></i>
+            </div>
+            <div class="week-panels micro">
+              <div class="agenda">
+                <span class="label">Agenda</span>
+                <strong class="peek default">9:00 · Review</strong>
+                <strong class="peek preload">8:30 · Plan</strong>
+              </div>
+              <div class="weather">
+                <span>Weather</span><strong>54°</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>A week in focus</h2>
+          <p>
+            Remote focus moves to the next day and the agenda follows, as it
+            does on the TV.
+          </p>
+          <button type="button" aria-label="Play A week in focus animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="art roundtrip-art" aria-hidden="true">
+          <div class="loop">
+            <div class="receipt-channel"></div>
+            <div class="request micro">
+              <span>TV · Reminders</span>
+              <strong>Send notes</strong>
+              <span class="completion waiting">Queued</span>
+              <span class="completion done">✓ Done</span>
+            </div>
+            <div class="nodes micro">
+              <span>Apple Bridge</span><span>Data Hub</span>
+            </div>
+            <i class="receipt-dot"></i>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>The round trip</h2>
+          <p>
+            A reminder completion goes from the TV to the Mac. The check appears
+            when the receipt comes back.
+          </p>
+          <button type="button" aria-label="Play The round trip animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+    </main>
+    <script>
+      for (const card of document.querySelectorAll('.card')) {
+        let reset;
+        function play() {
+          clearTimeout(reset);
+          card.removeAttribute('data-playing');
+          card.getBoundingClientRect();
+          card.setAttribute('data-playing', '');
+          reset = setTimeout(() => card.removeAttribute('data-playing'), 2600);
+        }
+        card.querySelector('button').addEventListener('click', play);
+        card.querySelector('.art').addEventListener('pointerenter', (event) => {
+          if (event.pointerType === 'mouse') play();
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -3,6 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import ProjectArt from '../../components/ProjectArt.astro';
 import Icon from '../../components/Icon.astro';
 import { projects } from '../../data/site';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface ProjectSection {
+  title: string;
+  text: string;
+  image?: { src: ImageMetadata; alt: string; caption: string };
+}
+
 export function getStaticPaths() {
   return projects.map((project) => ({
     params: { slug: project.slug },
@@ -22,7 +31,9 @@ const { project } = Astro.props;
         {project.category} / {project.name}
       </p>
       <h1>{project.title}</h1>
-      <p>{project.intro}</p>
+      {[project.intro].flat().map((paragraph) => (
+        <p class="project-intro">{paragraph}</p>
+      ))}
       <div class="tags">
         {project.tags.map((tag: string) => (
           <span>{tag}</span>
@@ -33,12 +44,39 @@ const { project } = Astro.props;
       <ProjectArt type={project.art} />
     </div>
     <div class="prose">
-      {project.sections.map((section: { title: string; text: string }) => (
+      {project.sections.map((section: ProjectSection) => (
         <section>
           <h2>{section.title}</h2>
           <p>{section.text}</p>
+          {section.image && (
+            <figure>
+              <Image src={section.image.src} alt={section.image.alt} />
+              <figcaption>{section.image.caption}</figcaption>
+            </figure>
+          )}
         </section>
       ))}
+      {project.relatedArticle && (
+        <p>
+          <a href={project.relatedArticle.href}>
+            {project.relatedArticle.label}
+          </a>
+        </p>
+      )}
     </div>
   </article>
 </Layout>
+
+<style>
+  .project-intro + .project-intro {
+    margin-top: 16px;
+  }
+  figure {
+    margin: 24px 0 0;
+  }
+  figcaption {
+    margin-top: 8px;
+    font-size: 1rem;
+    color: var(--muted);
+  }
+</style>

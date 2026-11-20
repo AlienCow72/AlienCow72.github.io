@@ -1021,6 +1021,12 @@ h1 {
 .prose p {
   margin-block: 20px;
 }
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
 .prose h2 {
   font-size: 2.375rem;
   color: var(--text);
