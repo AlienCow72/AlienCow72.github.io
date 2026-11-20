@@ -1,6 +1,7 @@
 ---
 import DstaxMark from './DstaxMark.astro';
 import BrandMark from './BrandMark.astro';
+import ChromecastArt from './ChromecastArt.astro';
 import personalMark from '../assets/brand/personal-mark-yellow.svg';
 
 interface Props {
@@ -210,6 +211,8 @@ const barHeights = [
       </div>
       <span class="diagram-foot">MASTER DATA → TAILORED RÉSUMÉS</span>
     </>
+  ) : type === 'chromecast' ? (
+    <ChromecastArt />
   ) : (
     <>
       <span class="diagram-label">AN INDEPENDENT LITTLE INTERNET</span>
@@ -273,6 +276,10 @@ const barHeights = [
 </script>
 
 <style>
+  .art-chromecast {
+    justify-content: center;
+    background: #303935;
+  }
   .diagram-stage .tiny-orbit {
     border: 0;
     color: var(--orbit-color, #c0b7d3);

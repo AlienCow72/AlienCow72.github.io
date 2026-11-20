@@ -1,0 +1,190 @@
+<div class="handoff-stage">
+  <div class="handoff">
+    <div class="device mac">
+      <div class="case mac-screen">
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+      <div class="mac-base"></div>
+    </div>
+    <div class="connection">
+      <span class="packet"></span>
+    </div>
+    <div class="device case hub">
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+    <div class="connection">
+      <span class="packet to-tv"></span>
+    </div>
+    <div class="device case tv">
+      <span class="week">Week</span>
+      <span class="widget">Agenda</span>
+      <span class="widget receipt">✓</span>
+    </div>
+    <span class="device-label mac-label">Mac</span>
+    <span class="device-label hub-label">Hub</span>
+    <span class="device-label tv-label">TV</span>
+  </div>
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      target.toggleAttribute('data-visible', isIntersecting);
+    });
+  });
+  document.querySelectorAll('.handoff-stage').forEach((stage) => {
+    observer.observe(stage);
+  });
+</script>
+
+<style>
+  .handoff-stage {
+    --sage: #a2bba7;
+    --connector: #a2bba77f;
+    container-type: inline-size;
+    width: 100%;
+    max-width: 370px;
+  }
+  .handoff {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) 0.27fr minmax(0, 0.66fr)
+      0.27fr minmax(0, 1.52fr);
+    align-items: center;
+    transform: rotate(-7deg);
+    color: var(--sage);
+  }
+  .case {
+    border: 1px solid #a2bba76b;
+    border-radius: 5px;
+    background: #272c2a;
+  }
+  .mac-screen,
+  .hub {
+    display: grid;
+    gap: clamp(3px, 1.5cqi, 6px);
+    padding: 18% 13%;
+  }
+  .mac-screen i {
+    height: 2px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+  .mac-screen i:nth-child(2) {
+    width: 70%;
+  }
+  .mac-base {
+    height: 3px;
+    width: 108%;
+    margin-inline: -4%;
+    border-radius: 0 0 5px 5px;
+    background: var(--connector);
+  }
+  .hub i {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: clamp(5px, 2.4cqi, 9px);
+    padding-inline: 2px;
+    border: 1px solid #a2bba776;
+    border-radius: 2px;
+  }
+  .hub i::after {
+    content: '';
+    width: 2px;
+    height: 2px;
+    background: currentColor;
+  }
+  .tv {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 4px;
+    padding: 9%;
+    color: var(--gold);
+  }
+  .week {
+    grid-column: 1 / -1;
+    font: 400 clamp(0.875rem, 6.5cqi, 1.625rem) / 1 var(--serif);
+    transform-origin: left center;
+  }
+  .widget {
+    display: grid;
+    align-content: center;
+    padding: 2px 3px;
+    border-radius: 2px;
+    background: #ffffff0d;
+    font-size: clamp(0.5rem, 3.25cqi, 0.75rem);
+    white-space: nowrap;
+  }
+  .receipt {
+    justify-items: center;
+    color: var(--sage);
+  }
+  .device-label {
+    margin-top: 7px;
+    text-align: center;
+    font-size: clamp(0.625rem, 3.8cqi, 0.875rem);
+  }
+  .mac-label {
+    grid-column: 1;
+  }
+  .hub-label {
+    grid-column: 3;
+  }
+  .tv-label {
+    grid-column: 5;
+  }
+  .connection {
+    position: relative;
+    container-type: inline-size;
+    height: 1px;
+    background: var(--connector);
+  }
+  .packet {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.project-card:is(:hover, :focus-visible), .project-detail-art:hover)
+      .handoff-stage[data-visible] {
+      .packet {
+        animation: handoff-travel 0.48s 0.12s linear both;
+      }
+      .to-tv {
+        animation-delay: 0.8s;
+      }
+      .hub,
+      .week {
+        animation: handoff-receive 0.46s 0.55s ease-out both;
+      }
+      .week {
+        animation-delay: 1.23s;
+      }
+    }
+  }
+  @keyframes handoff-travel {
+    16%,
+    78% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100cqi);
+    }
+  }
+  @keyframes handoff-receive {
+    45% {
+      transform: scale(1.1);
+    }
+  }
+</style>

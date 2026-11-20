@@ -1,0 +1,422 @@
+<!doctype html>
+<!-- Throwaway artwork comparison. The live project card can adopt one concept after review. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KMA-Chromecast card mockups</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --gold: #e4bc78;
+        --paper: #eeede7;
+        --panel: #242628;
+        --ink: #c0c1bb;
+        --line: #ffffff18;
+        --green: #a2bba7;
+        --lilac: #c0b7d3;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--foreground, var(--paper));
+        font:
+          1rem/1.45 system-ui,
+          sans-serif;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 1100px;
+        margin-inline: auto;
+      }
+      .card {
+        background: var(--panel);
+        color: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .scene {
+        aspect-ratio: 4 / 3;
+        min-height: 155px;
+        display: grid;
+        place-items: center;
+        container-type: inline-size;
+        overflow: hidden;
+      }
+      .focus {
+        background: #39352f;
+        color: var(--gold);
+      }
+      .flow {
+        background: #303936;
+        color: var(--green);
+      }
+      .week {
+        background: #34333a;
+        color: var(--lilac);
+      }
+      .copy {
+        padding: 15px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      h2 {
+        margin: 0;
+        font:
+          400 clamp(1.19rem, 2.7vw, 1.65rem)/1.12 Georgia,
+          serif;
+      }
+      p {
+        margin: 8px 0 14px;
+        color: var(--ink);
+        font-size: 0.93rem;
+      }
+      button {
+        margin-top: auto;
+        color: var(--gold);
+        background: #323436;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 7px 10px;
+        min-height: 40px;
+        font: inherit;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #403a30;
+      }
+      button:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+      .tv {
+        width: min(84cqi, 245px);
+        aspect-ratio: 16 / 10;
+        border-radius: 6px;
+        background: #292827;
+        border: 1px solid #e4bc785c;
+        position: relative;
+        padding: 7% 10%;
+        transform: rotate(-7deg);
+      }
+      .clock {
+        font:
+          400 clamp(1.2rem, 11cqi, 2.65rem)/1 Georgia,
+          serif;
+      }
+      .dock {
+        position: absolute;
+        inset: auto 10% 13%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+      }
+      .dock-tile {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1;
+        border-radius: 4px;
+        color: var(--paper);
+        background: #403d37;
+        font-size: clamp(0.75rem, 7cqi, 1.5rem);
+      }
+      .dashboard-mark {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+        width: clamp(12px, 6cqi, 20px);
+        aspect-ratio: 1;
+      }
+      .dashboard-mark i {
+        border-radius: 1px;
+        background: var(--gold);
+      }
+      .dashboard-mark i:nth-child(3) {
+        background: var(--green);
+      }
+      .dock-ring {
+        position: absolute;
+        inset: -3px auto -3px -3px;
+        width: calc((100% - 15px) / 4 + 6px);
+        border: 1.5px solid var(--gold);
+        border-radius: 6px;
+      }
+      .card[data-playing] .dock-ring {
+        animation: move-focus 1.9s ease-in-out both;
+      }
+      @keyframes move-focus {
+        0%,
+        10%,
+        100% {
+          transform: translateX(0);
+        }
+        30%,
+        41% {
+          transform: translateX(calc(100% - 1px));
+        }
+        60%,
+        71% {
+          transform: translateX(calc(200% - 2px));
+        }
+        91% {
+          transform: translateX(0);
+        }
+      }
+      .diagram {
+        width: min(90cqi, 295px);
+        display: grid;
+        grid-template-columns: 1fr 0.35fr 1fr 0.35fr 1fr;
+        align-items: center;
+        transform: rotate(-7deg);
+      }
+      .node {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 5px;
+        min-width: 0;
+        aspect-ratio: 1;
+        background: #292f2d;
+        border: 1px solid #a2bba760;
+        border-radius: 5px;
+        color: var(--green);
+        font:
+          clamp(0.6rem, 4.3cqi, 0.8rem) system-ui,
+          sans-serif;
+      }
+      .node:last-child {
+        color: var(--gold);
+        border-color: #e4bc7870;
+      }
+      .symbol {
+        font-size: clamp(0.9rem, 9cqi, 1.6rem);
+        line-height: 1;
+      }
+      .wire {
+        height: 1px;
+        background: #a2bba76b;
+        position: relative;
+        container-type: inline-size;
+      }
+      .pulse {
+        position: absolute;
+        inset: -2px auto auto 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0;
+      }
+      .card[data-playing] .wire:nth-child(2) .pulse {
+        animation: relay 0.65s ease both;
+      }
+      .card[data-playing] .wire:nth-child(4) .pulse {
+        animation: relay 0.65s 0.65s ease both;
+      }
+      .card[data-playing] .node:last-child .symbol {
+        animation: receive 0.65s 1.2s ease both;
+      }
+      @keyframes relay {
+        0% {
+          opacity: 0;
+          transform: translateX(0);
+        }
+        25%,
+        75% {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+          transform: translateX(calc(100cqi - 5px));
+        }
+      }
+      @keyframes receive {
+        50% {
+          transform: scale(1.24);
+        }
+      }
+      .canvas {
+        width: min(83cqi, 245px);
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 6px;
+        padding: 9%;
+        border-radius: 5px;
+        border: 1px solid #c0b7d35e;
+        background: #28282e;
+        transform: rotate(-7deg);
+        font:
+          clamp(0.55rem, 4.5cqi, 0.79rem)/1.4 system-ui,
+          sans-serif;
+      }
+      .days {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+      }
+      .days b {
+        color: var(--gold);
+      }
+      .entry {
+        min-width: 0;
+        background: #35333a;
+        border-radius: 3px;
+        padding: 5px;
+        color: var(--paper);
+        white-space: nowrap;
+      }
+      .agenda {
+        border-left: 2px solid var(--gold);
+      }
+      .forecast {
+        grid-row: span 2;
+        align-content: center;
+        text-align: center;
+        color: var(--gold);
+        font-size: 1.4em;
+      }
+      .reminder {
+        color: var(--green);
+      }
+      .card[data-playing] .entry {
+        animation: settle 0.8s ease both;
+      }
+      .card[data-playing] .forecast {
+        animation-delay: 160ms;
+      }
+      .card[data-playing] .reminder {
+        animation-delay: 300ms;
+      }
+      @keyframes settle {
+        from {
+          transform: translateY(12px);
+          opacity: 0.35;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      @media (max-width: 610px) {
+        .grid {
+          grid-template-columns: 1fr;
+          max-width: 420px;
+        }
+        .scene {
+          aspect-ratio: 5 / 3;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .card[data-playing] * {
+          animation: none !important;
+        }
+        .card[data-playing] .scene {
+          outline: 2px solid currentColor;
+          outline-offset: -2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="grid" aria-label="KMA-Chromecast artwork mockups">
+      <article class="card">
+        <div class="scene focus" aria-hidden="true">
+          <div class="tv">
+            <div class="clock">7:24</div>
+            <div class="dock">
+              <div class="dock-ring"></div>
+              <div class="dock-tile">
+                <span class="dashboard-mark"><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="dock-tile">▸</div>
+              <div class="dock-tile">♪</div>
+              <div class="dock-tile">◎</div>
+            </div>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>Glass Dock</h2>
+          <p>
+            The remote’s focus ring steps across the app dock and returns to
+            Dashboard.
+          </p>
+          <button type="button" aria-label="Play Glass Dock animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="scene flow" aria-hidden="true">
+          <div class="diagram">
+            <div class="node"><span class="symbol">▱</span>Mac</div>
+            <div class="wire"><span class="pulse"></span></div>
+            <div class="node"><span class="symbol">▤</span>Hub</div>
+            <div class="wire"><span class="pulse"></span></div>
+            <div class="node"><span class="symbol">▣</span>TV</div>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>Mac → Hub → TV</h2>
+          <p>
+            A gold pulse travels from the bridge through the hub and lands on
+            the TV.
+          </p>
+          <button type="button" aria-label="Play Mac to TV animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="scene week" aria-hidden="true">
+          <div class="canvas">
+            <div class="days">
+              <span>M</span><span>T</span><span>W</span><b>T</b><span>F</span
+              ><span>S</span><span>S</span>
+            </div>
+            <div class="entry agenda">9:00 · Review</div>
+            <div class="entry forecast">54°</div>
+            <div class="entry reminder">✓ Send notes</div>
+          </div>
+        </div>
+        <div class="copy">
+          <h2>Week Canvas</h2>
+          <p>
+            Agenda, weather, and reminders settle into the TV dashboard under
+            the week strip.
+          </p>
+          <button type="button" aria-label="Play Week Canvas animation">
+            Play animation
+          </button>
+        </div>
+      </article>
+    </main>
+    <script>
+      for (const card of document.querySelectorAll('.card')) {
+        let reset;
+        function play() {
+          clearTimeout(reset);
+          card.removeAttribute('data-playing');
+          card.getBoundingClientRect();
+          card.setAttribute('data-playing', '');
+          reset = setTimeout(() => card.removeAttribute('data-playing'), 1950);
+        }
+        card.querySelector('button').addEventListener('click', play);
+        card
+          .querySelector('.scene')
+          .addEventListener('pointerenter', (event) => {
+            if (event.pointerType === 'mouse') play();
+          });
+      }
+    </script>
+  </body>
+</html>
